@@ -6,14 +6,20 @@ var velocity = Vector2()
 var screensize = Vector2(480, 720)
 
 func _ready():
-	pass
+	start(Vector2(240, 360))
 
 func _process(delta):
 	get_input()
-	
+
 	position += velocity * delta
 	position.x = clamp(position.x, 0, screensize.x)
 	position.y = clamp(position.y, 0, screensize.y)
+
+	if velocity.length() > 0:
+		$AnimatedSprite.animation = "run"
+		$AnimatedSprite.flip_h = velocity.x < 0
+	else:
+		$AnimatedSprite.animation = "idle"
 
 func get_input():
 	velocity = Vector2()
@@ -26,6 +32,14 @@ func get_input():
 	if Input.is_action_pressed("ui_down"):
 		velocity.y += 1
 	if velocity.length() > 0:
-		velocity.normalized() * speed
+		velocity = velocity.normalized() * speed
 
+func start(pos):
+	set_process(true)
+	position = pos
+	$AnimatedSprite.animation = "idle"
+
+func die():
+	$AnimatedSprite.animation = "hurt"
+	set_process(false)
 

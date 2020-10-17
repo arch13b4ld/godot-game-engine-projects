@@ -21,14 +21,14 @@ animations = [ {
 "name": "idle",
 "speed": 8.0
 }, {
-"frames": [ ExtResource( 12 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 1 ) ],
-"loop": true,
-"name": "run",
-"speed": 8.0
-}, {
 "frames": [ ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "hurt",
+"speed": 8.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "run",
 "speed": 8.0
 } ]
 
@@ -40,10 +40,13 @@ script = ExtResource( 13 )
 __meta__ = {
 "_edit_group_": true
 }
+speed = 100
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
+frame = 1
+playing = true
 offset = Vector2( 0, -5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
