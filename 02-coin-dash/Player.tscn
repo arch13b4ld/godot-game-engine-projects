@@ -33,21 +33,23 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 9.03385, 10.9939 )
+extents = Vector2( 7.56422, 10.5544 )
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_group_": true
 }
-speed = 100
+speed = 350
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 offset = Vector2( 0, -5 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.46822, 0.561865 )
 shape = SubResource( 2 )
+[connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
