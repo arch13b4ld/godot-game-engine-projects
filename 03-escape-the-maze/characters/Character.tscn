@@ -71,6 +71,9 @@ extents = Vector2( 16, 16 )
 
 [node name="Character" type="Area2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 speed = 3
 
 [node name="Sprite" type="Sprite" parent="."]
