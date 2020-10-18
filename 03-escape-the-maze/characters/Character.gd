@@ -29,7 +29,7 @@ func move(dir):
 
 	can_move = false
 	$AnimationPlayer.play(facing)
-	$TwMove.interpolate_property(self, "position",
+	$TwMove.interpolate_property(self, 'position',
 		position, position + moves[facing] * tile_size,
 		1.0 / speed, Tween.TRANS_SINE, Tween.EASE_IN_OUT)
 	$TwMove.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/slime.png" type="Texture" id=1]
 [ext_resource path="res://characters/Character.tscn" type="PackedScene" id=3]
@@ -9,9 +9,6 @@ script/source = "extends \"res://characters/Character.gd\"
 func _ready():
 	pass
 "
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 22, 16 )
 
 [node name="Enemy" instance=ExtResource( 3 )]
 collision_layer = 4
@@ -24,4 +21,3 @@ offset = Vector2( 0, -15 )
 
 [node name="CollisionShape2D" parent="." index="3"]
 position = Vector2( 0, 1.5 )
-shape = SubResource( 2 )
