@@ -1,4 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://characters/Character.gd" type="Script" id=1]
 
 [sub_resource type="Animation" id=2]
 resource_name = "down"
@@ -68,6 +70,8 @@ tracks/0/keys = {
 extents = Vector2( 16, 16 )
 
 [node name="Character" type="Area2D"]
+script = ExtResource( 1 )
+speed = 3
 
 [node name="Sprite" type="Sprite" parent="."]
 vframes = 4
@@ -100,3 +104,4 @@ cast_to = Vector2( 64, 0 )
 [node name="RCUp" type="RayCast2D" parent="."]
 enabled = true
 cast_to = Vector2( 0, -64 )
+[connection signal="tween_completed" from="TwMove" to="." method="_on_TwMove_tween_completed"]
