@@ -7,6 +7,12 @@ export (int) var speed
 
 var screensize = Vector2()
 var velocity = Vector2()
+var directions = {
+	'ui_left': 	Vector2(-1, 0),
+	'ui_right': Vector2(1, 0),
+	'ui_up': 	Vector2(0, -1),
+	'ui_down': 	Vector2(0, 1)
+}
 
 func _ready():
 	pass
@@ -38,14 +44,9 @@ func _on_Player_area_entered(area):
 func get_input():
 	velocity = Vector2()
 
-	if Input.is_action_pressed("ui_left"):
-		velocity.x -= 1
-	if Input.is_action_pressed("ui_right"):
-		velocity.x += 1
-	if Input.is_action_pressed("ui_up"):
-		velocity.y -= 1
-	if Input.is_action_pressed("ui_down"):
-		velocity.y += 1
+	for key in directions.keys():
+		if Input.is_action_pressed(key):
+			velocity += directions[key]
 
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
