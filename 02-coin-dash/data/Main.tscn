@@ -1,0 +1,63 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://data/pickup/coin/Coin.tscn" type="PackedScene" id=1]
+[ext_resource path="res://data/Main.gd" type="Script" id=2]
+[ext_resource path="res://assets/grass.png" type="Texture" id=3]
+[ext_resource path="res://assets/audio/Powerup.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/Level.wav" type="AudioStream" id=5]
+[ext_resource path="res://assets/audio/Hit.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/audio/Coin.wav" type="AudioStream" id=7]
+[ext_resource path="res://data/hud/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://data/obstacles/Cactus.tscn" type="PackedScene" id=9]
+[ext_resource path="res://data/pickup/powerup/PowerUp.tscn" type="PackedScene" id=10]
+[ext_resource path="res://data/player/Player.tscn" type="PackedScene" id=11]
+
+[node name="Main" type="Node"]
+script = ExtResource( 2 )
+Coin = ExtResource( 1 )
+PowerUp = ExtResource( 10 )
+gametime = 30
+difficulty = 4
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ACoin" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="CCoin" type="Node" parent="."]
+
+[node name="Cactus" parent="." instance=ExtResource( 9 )]
+position = Vector2( 376.214, 172.233 )
+
+[node name="Player" parent="." instance=ExtResource( 11 )]
+
+[node name="PlayerStart" type="Position2D" parent="."]
+position = Vector2( 240, 360 )
+
+[node name="HUD" parent="." instance=ExtResource( 8 )]
+
+[node name="ALevel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="AGameOver" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="APowerUp" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="TPowerUp" type="Timer" parent="."]
+one_shot = true
+
+[node name="TGame" type="Timer" parent="."]
+[connection signal="hurt" from="Player" to="." method="_on_Player_hurt"]
+[connection signal="pickup" from="Player" to="." method="_on_Player_pickup"]
+[connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="timeout" from="TPowerUp" to="." method="_on_TPowerUp_timeout"]
+[connection signal="timeout" from="TGame" to="." method="_on_TGame_timeout"]
