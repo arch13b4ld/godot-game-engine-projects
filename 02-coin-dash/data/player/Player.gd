@@ -3,32 +3,33 @@ extends Area2D
 signal pickup
 signal hurt
 
-export (int) var speed
-
-var screensize = Vector2()
-var velocity = Vector2()
-var directions = {
-	'ui_left': 	Vector2(-1, 0),
-	'ui_right': Vector2(1, 0),
-	'ui_up': 	Vector2(0, -1),
-	'ui_down': 	Vector2(0, 1)
+enum {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
 }
 
-func _ready():
-	pass
+enum {
+	IDLE,
+	RUN,
+	HURT
+}
 
-func _process(delta):
-	get_input()
+export (int) var speed
 
-	position += velocity * delta
-	position.x = clamp(position.x, 0, screensize.x)
-	position.y = clamp(position.y, 0, screensize.y)
+var screensize
+var velocity
+var state
 
-	if velocity.length() > 0:
-		$AnimatedSprite.animation = "run"
-		$AnimatedSprite.flip_h = velocity.x < 0
-	else:
-		$AnimatedSprite.animation = "idle"
+var directions = {
+	'ui_left' : Vector2(-1,  0),
+	'ui_right': Vector2( 1,  0),
+	'ui_up'   : Vector2( 0, -1),
+	'ui_down' : Vector2( 0,  1)
+}
+
+var animations = ['idle', 'run', 'hurt']
 
 func _on_Player_area_entered(area):
 	if area.is_in_group("coins"):
@@ -41,16 +42,6 @@ func _on_Player_area_entered(area):
 		emit_signal("hurt")
 		die()
 
-func get_input():
-	velocity = Vector2()
-
-	for key in directions.keys():
-		if Input.is_action_pressed(key):
-			velocity += directions[key]
-
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * speed
-
 func start(pos):
 	set_process(true)
 	position = pos
@@ -59,3 +50,39 @@ func start(pos):
 func die():
 	$AnimatedSprite.animation = "hurt"
 	set_process(false)
+
+func set_animation():
+	$AnimatedSprite.animation = animations[state]
+	$AnimatedSprite.flip_h = velocity.x < 0
+
+func set_position_limits():
+	position.x = clamp(position.x, 0, screensize.x)
+	position.y = clamp(position.y, 0, screensize.y)
+
+func normalize_velocity():
+	if state == RUN:
+		velocity = velocity.normalized() * speed
+
+func set_state():
+	if velocity.length() > 0:
+		state = RUN
+	else:
+		state = IDLE
+		
+func handle_input():
+	velocity = Vector2()
+
+	for key in directions.keys():
+		if Input.is_action_pressed(key):
+			velocity += directions[key]
+
+func _process(delta):
+	handle_input()
+	set_state()
+	normalize_velocity()
+	position += velocity * delta
+	set_position_limits()
+	set_animation()
+
+func _ready():
+	pass
