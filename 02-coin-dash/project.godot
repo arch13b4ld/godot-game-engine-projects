@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="02 -coin-dash"
+config/name="02-coin-dash"
 run/main_scene="res://data/Main.tscn"
 config/icon="res://icon.png"
 

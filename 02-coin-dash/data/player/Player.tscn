@@ -14,8 +14,6 @@
 [ext_resource path="res://assets/player/run/player-run-1.png" type="Texture" id=12]
 [ext_resource path="res://data/player/Player.gd" type="Script" id=13]
 
-
-
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 4 ) ],
@@ -26,32 +24,31 @@ animations = [ {
 "frames": [ ExtResource( 10 ), ExtResource( 5 ) ],
 "loop": true,
 "name": "hurt",
-"speed": 8.0
+"speed": 4.0
 }, {
 "frames": [ ExtResource( 12 ), ExtResource( 7 ), ExtResource( 11 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 1 ) ],
 "loop": true,
 "name": "run",
-"speed": 8.0
+"speed": 12.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 7.56422, 10.5544 )
+extents = Vector2( 8, 12 )
 
 [node name="Player" type="Area2D"]
 script = ExtResource( 13 )
 __meta__ = {
 "_edit_group_": true
 }
-speed = 350
+speed = 150
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
-animation = "idle"
-frame = 2
+animation = "run"
+frame = 1
 playing = true
-offset = Vector2( 0, -5 )
+offset = Vector2( 0, -4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.46822, 0.561865 )
 shape = SubResource( 2 )
 [connection signal="area_entered" from="." to="." method="_on_Player_area_entered"]
