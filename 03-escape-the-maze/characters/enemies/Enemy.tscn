@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/slime.png" type="Texture" id=1]
-[ext_resource path="res://characters/Character.tscn" type="PackedScene" id=3]
+[ext_resource path="res://characters/Character.tscn" type="PackedScene" id=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends \"res://characters/Character.gd\"
@@ -10,7 +10,7 @@ func _ready():
 	pass
 "
 
-[node name="Enemy" instance=ExtResource( 3 )]
+[node name="Enemy" instance=ExtResource( 2 )]
 collision_layer = 4
 collision_mask = 3
 script = SubResource( 1 )
