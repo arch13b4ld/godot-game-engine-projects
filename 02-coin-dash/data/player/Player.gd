@@ -4,16 +4,15 @@ signal pickup
 signal hurt
 
 enum {
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-}
-
-enum {
 	IDLE,
 	RUN,
 	HURT
+}
+
+enum {
+	COINS
+	POWERUPS
+	OBSTACLES
 }
 
 export (int) var speed
@@ -21,15 +20,14 @@ export (int) var speed
 var screensize
 var velocity
 var state
-
+var animations = ['idle', 'run', 'hurt']
+var groups = ['coins', 'powerups', 'obstacles']
 var directions = {
 	'ui_left' : Vector2(-1,  0),
 	'ui_right': Vector2( 1,  0),
 	'ui_up'   : Vector2( 0, -1),
 	'ui_down' : Vector2( 0,  1)
 }
-
-var animations = ['idle', 'run', 'hurt']
 
 func _on_Player_area_entered(area):
 	if area.is_in_group("coins"):
@@ -40,16 +38,16 @@ func _on_Player_area_entered(area):
 		emit_signal("pickup", "powerup")
 	if area.is_in_group("obstacles"):
 		emit_signal("hurt")
-		die()
+		end()
 
-func start(pos):
+func end():
+	$AnimatedSprite.animation = animations[HURT]
+	set_process(false)
+
+func init(pos):
 	set_process(true)
 	position = pos
-	$AnimatedSprite.animation = "idle"
-
-func die():
-	$AnimatedSprite.animation = "hurt"
-	set_process(false)
+	$AnimatedSprite.animation = animations[IDLE]
 
 func set_animation():
 	$AnimatedSprite.animation = animations[state]
@@ -59,16 +57,6 @@ func set_position_limits():
 	position.x = clamp(position.x, 0, screensize.x)
 	position.y = clamp(position.y, 0, screensize.y)
 
-func normalize_velocity():
-	if state == RUN:
-		velocity = velocity.normalized() * speed
-
-func set_state():
-	if velocity.length() > 0:
-		state = RUN
-	else:
-		state = IDLE
-		
 func handle_input():
 	velocity = Vector2()
 
@@ -78,9 +66,16 @@ func handle_input():
 
 func _process(delta):
 	handle_input()
-	set_state()
-	normalize_velocity()
+
+	if velocity.length() > 0:
+		state = RUN
+	else:
+		state = IDLE
+
+	if state == RUN:
+		velocity = velocity.normalized() * speed
 	position += velocity * delta
+
 	set_position_limits()
 	set_animation()
 
