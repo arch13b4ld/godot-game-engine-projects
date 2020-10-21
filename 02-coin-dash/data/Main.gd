@@ -57,7 +57,7 @@ func new_game():
 	level = 1
 	score = 0
 	time_left = gametime
-	$Player.start($PlayerStart.position)
+	$Player.init($PlayerStart.position)
 	$Player.show()
 	$TGame.start()
 	spawn_coins()
@@ -82,4 +82,4 @@ func game_over():
 		coin.queue_free()
 
 	$HUD.show_game_over()
-	$Player.die()
+	$Player.end()
