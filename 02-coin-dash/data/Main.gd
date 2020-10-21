@@ -34,11 +34,11 @@ func _on_TGame_timeout():
 
 func _on_Player_pickup(type):
 	match type:
-		"coin":
+		"coins":
 			score += 1
 			$ACoin.play()
 			$HUD.update_score(score)
-		"powerup":
+		"powerups":
 			time_left += 5
 			$APowerUp.play()
 			$HUD.update_timer(time_left)

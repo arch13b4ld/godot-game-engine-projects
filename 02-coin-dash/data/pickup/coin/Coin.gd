@@ -1,17 +1,12 @@
 extends Area2D
 
+enum {
+	COINS
+	POWERUPS
+	OBSTACLES
+}
+
 var screensize = Vector2()
-
-func _ready():
-	$Timer.wait_time = rand_range(3, 8)
-	$Timer.start()
-	$Tween.interpolate_property($AnimatedSprite, 'scale', $AnimatedSprite.scale,
-		$AnimatedSprite.scale * 3, 0.3, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($AnimatedSprite, 'modulate', Color(1, 1, 1, 1),
-		Color(1, 1, 1, 0), 0.3, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
-
-func _process(delta):
-	pass
 
 func _on_Tween_tween_completed(object, key):
 	queue_free()
@@ -27,3 +22,17 @@ func _on_Coin_area_entered(area):
 func pickup():
 	monitoring = false
 	$Tween.start()
+
+func _process(delta):
+	pass
+
+func _ready():
+	$Timer.wait_time = rand_range(3, 8)
+	$Timer.start()
+
+	$Tween.interpolate_property($AnimatedSprite, 'scale',
+		$AnimatedSprite.scale, $AnimatedSprite.scale * 2, 0.3,
+		Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($AnimatedSprite, 'modulate',
+		Color(1, 1, 1, 1), Color(1, 1, 1, 0), 0.3,
+		Tween.TRANS_QUAD, Tween.EASE_IN_OUT)

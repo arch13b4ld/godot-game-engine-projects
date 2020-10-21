@@ -22,8 +22,8 @@ enum {
 
 export (int) var speed
 
-var screensize
 var velocity
+var screensize = Vector2()
 var state = IDLE
 var facing = RIGHT
 var animations = ['idle', 'run', 'hurt']
@@ -59,8 +59,20 @@ func set_animation():
 	$AnimatedSprite.flip_h = facing
 
 func set_position_limits():
-	position.x = clamp(position.x, 0, screensize.x)
-	position.y = clamp(position.y, 0, screensize.y)
+	position.x = clamp(position.x, 0 + 8, screensize.x - 8)
+	position.y = clamp(position.y, 0 + 8, screensize.y - 8)
+
+func set_state():
+	if velocity.length() > 0:
+		state = RUN
+	else:
+		state = IDLE
+
+func set_facing():
+	if velocity.x < 0:
+		facing = LEFT
+	elif velocity.x > 0:
+		facing = RIGHT
 
 func handle_input():
 	velocity = Vector2()
@@ -71,16 +83,8 @@ func handle_input():
 
 func _process(delta):
 	handle_input()
-
-	if velocity.length() > 0:
-		state = RUN
-	else:
-		state = IDLE
-
-	if velocity.x < 0:
-		facing = LEFT
-	elif velocity.x > 0:
-		facing = RIGHT
+	set_state()
+	set_facing()
 
 	if state == RUN:
 		velocity = velocity.normalized() * speed
