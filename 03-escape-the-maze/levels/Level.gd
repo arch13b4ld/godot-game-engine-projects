@@ -9,7 +9,7 @@ var doors = []
 func _ready():
 	randomize()
 	$Items.hide()
-	set_camera_limits()
+#	set_camera_limits()
 	var dor_id = $Walls.tile_set.find_tile_by_name('DoorRed')
 
 	for cell in $Walls.get_used_cells_by_id(dor_id):

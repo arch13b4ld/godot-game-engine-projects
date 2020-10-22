@@ -1,12 +1,31 @@
 extends Node
 
-var levels = ["res://levels/Level1.tscn"]
-var start_screen = "res://interface/StartScreen.tscn"
-var end_screen = "res://interface/EndScreen.tscn"
+var levels = ["res://levels/Level1.tscn", "res://levels/Level2.tscn"]
+var start_screen = "res://ui/StartScreen.tscn"
+var end_screen = "res://ui/EndScreen.tscn"
 var current_level
 var score = 0
+var highscore = 0
+var savefile = "user://escapethemaze"
+
+func setup():
+	var file = File.new()
+	if file.file_exists(savefile):
+		file.open(savefile, File.READ)
+		var content = file.get_as_text()
+		highscore = int(content)
+		file.close()
+
+func save_score():
+	var file = File.new()
+	file.open(savefile, File.WRITE)
+	file.store_string(str(highscore))
+	file.close()
 
 func game_over():
+	if score > highscore:
+		highscore = score
+		save_score()
 	get_tree().change_scene(end_screen)
 
 func next_level():
@@ -22,8 +41,8 @@ func new_game():
 	score = 0
 	next_level()
 
-#func _process(delta):
-#	pass
+func _process(delta):
+	pass
 
 func _ready():
-	pass
+	setup()

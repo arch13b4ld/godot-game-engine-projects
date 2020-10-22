@@ -5,4 +5,4 @@ func _input(event):
 		Global.new_game()
 
 func _ready():
-	pass
+	$Highscore.text = "High Score: "+ str(Global.highscore)

@@ -120,6 +120,28 @@ region_rect = Rect2( 576, 448, 64, 64 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="WallBrown/StaticBody2D"]
 polygon = PoolVector2Array( 0, 0, 0, 64, 64, 64, 64, 0 )
 
+[node name="DoorRed" type="Sprite" parent="."]
+position = Vector2( 256, 384 )
+texture = ExtResource( 4 )
+centered = false
+region_rect = Rect2( 576, 448, 64, 64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="DoorRed"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoorRed/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 0, 64, 64, 64, 64, 0 )
+
+[node name="DoorGreen" type="Sprite" parent="."]
+position = Vector2( 384, 384 )
+texture = ExtResource( 5 )
+centered = false
+region_rect = Rect2( 576, 448, 64, 64 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="DoorGreen"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="DoorGreen/StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 0, 64, 64, 64, 64, 0 )
+
 [node name="PlayerSpawn" type="Sprite" parent="."]
 position = Vector2( 0, 384 )
 texture = ExtResource( 1 )
@@ -132,18 +154,6 @@ position = Vector2( 128, 384 )
 texture = ExtResource( 1 )
 centered = false
 region_enabled = true
-region_rect = Rect2( 704, 128, 64, 64 )
-
-[node name="DoorRed" type="Sprite" parent="."]
-position = Vector2( 256, 384 )
-texture = ExtResource( 4 )
-centered = false
-region_rect = Rect2( 704, 128, 64, 64 )
-
-[node name="DoorGreen" type="Sprite" parent="."]
-position = Vector2( 384, 384 )
-texture = ExtResource( 5 )
-centered = false
 region_rect = Rect2( 704, 128, 64, 64 )
 
 [node name="KeyRed" type="Sprite" parent="."]
