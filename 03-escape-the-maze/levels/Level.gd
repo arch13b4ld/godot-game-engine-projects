@@ -48,12 +48,13 @@ func spawn_items():
 				var pickup = PickUp.instance()
 				pickup.init(type, pos)
 				add_child(pickup)
+				pickup.connect('coin_pickup', $HUD, 'update_score')
 
 func game_over():
-	pass
+	Global.game_over()
 
 func _on_Player_win():
-	pass
+	Global.next_level()
 
 func _on_Player_grabbed_key():
 	for cell in doors:

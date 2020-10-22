@@ -127,7 +127,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2( 704, 256, 64, 64 )
 
-[node name="EnemySpawn2" type="Sprite" parent="."]
+[node name="EnemySpawn" type="Sprite" parent="."]
 position = Vector2( 128, 384 )
 texture = ExtResource( 1 )
 centered = false
