@@ -24,8 +24,12 @@ func init(_type, pos):
 
 func pickup():
 	match type:
-		'coin':
+		'Coin':
 			emit_signal("coin_pickup", 1)
+			$ACoin.play()
+		'KeyRed':
+			$AKey.play()
+
 	$CollisionShape2D.disabled = true
 	$Tween.start()
 
