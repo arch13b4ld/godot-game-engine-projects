@@ -9,7 +9,7 @@ var doors = []
 func _ready():
 	randomize()
 	$Items.hide()
-#	set_camera_limits()
+	set_camera_limits()
 	var dor_id = $Walls.tile_set.find_tile_by_name('DoorRed')
 
 	for cell in $Walls.get_used_cells_by_id(dor_id):
@@ -26,8 +26,8 @@ func set_camera_limits():
 
 	$Player/Camera2D.limit_left = map_size.position.x * cell_size.x
 	$Player/Camera2D.limit_top = map_size.position.y * cell_size.y
-	$Player/Camera2D.limit_right = map_size.position.x * cell_size.x
-	$Player/Camera2D.limit_bottom = map_size.position.y * cell_size.y
+	$Player/Camera2D.limit_right = map_size.end.x * cell_size.x
+	$Player/Camera2D.limit_bottom = map_size.end.y * cell_size.y
 
 func spawn_items():
 	for cell in items.get_used_cells():
