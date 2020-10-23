@@ -83,6 +83,5 @@ func _process(delta):
 
 func _ready():
 	set_state(State.ALIVE)
-	screensize = get_viewport().get_visible_rect().size
 	$TimerGun.wait_time = fire_rate
 	radius = int($Sprite.texture.get_size().x / 2)
