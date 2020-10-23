@@ -13,6 +13,7 @@ export (int) var spin_power
 var state = null
 var thrust = Vector2()
 var rotation_dir = 0
+var screensize = Vector2()
 
 func handle_input():
 	thrust = Vector2()
@@ -41,12 +42,26 @@ func set_state(new_state):
 
 	state = new_state
 
-func _physics_process(delta):
+func _integrate_forces(physics_state):
 	set_applied_force(thrust.rotated(rotation))
 	set_applied_torque(spin_power * rotation_dir)
+
+	var xform = physics_state.get_transform()
+
+	if xform.origin.x > screensize.x:
+		xform.origin.x = 0
+	elif xform.origin.x < 0:
+		xform.origin.x = screensize.x
+	if xform.origin.y > screensize.y:
+		xform.origin.y = 0
+	elif xform.origin.y < 0:
+		xform.origin.y = screensize.y
+
+	physics_state.set_transform(xform)
 
 func _process(delta):
 	handle_input()
 
 func _ready():
 	set_state(State.ALIVE)
+	screensize = get_viewport().get_visible_rect().size
