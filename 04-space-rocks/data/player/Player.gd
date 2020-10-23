@@ -21,6 +21,9 @@ var screensize = Vector2()
 var shootable = true
 var radius
 
+func start():
+	pass
+
 func shoot():
 	if state == State.INVULNERABLE:
 		return
