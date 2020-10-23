@@ -11,8 +11,8 @@ export (int) var engine_power
 export (int) var spin_power
 
 var state = null
-var thrust
-var rotation_dir
+var thrust = Vector2()
+var rotation_dir = 0
 
 func handle_input():
 	thrust = Vector2()
@@ -41,8 +41,12 @@ func set_state(new_state):
 
 	state = new_state
 
+func _physics_process(delta):
+	set_applied_force(thrust.rotated(rotation))
+	set_applied_torque(spin_power * rotation_dir)
+
 func _process(delta):
 	handle_input()
 
 func _ready():
-	set_state(State.INIT)
+	set_state(State.ALIVE)
