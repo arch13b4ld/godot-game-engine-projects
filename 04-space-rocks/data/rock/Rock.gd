@@ -11,7 +11,7 @@ var sprite_scale = Vector2(1, 1)
 var radius = 0
 var size
 
-func exploded():
+func explode():
 	layers = 0
 	
 	$Sprite.hide()
