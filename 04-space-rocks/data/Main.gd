@@ -17,7 +17,7 @@ func spawn_rock(size, position=null, velocity=null):
 	rock.screensize = screensize
 	rock.start(position, velocity, size)
 	$Rocks.add_child(rock)
-	rock.connect('exploded', self, 'on_Rock_exploded')
+	rock.connect('exploded', self, '_on_Rock_exploded')
 
 func _on_Rock_exploded(size, radius, position, velocity):
 	if size <= 1:
