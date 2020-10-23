@@ -7,7 +7,12 @@ enum State {
 	DEAD
 }
 
+export (int) var engine_power
+export (int) var spin_power
+
 var state = null
+var thrust = Vector2()
+var rotation_dir = 0
 
 func set_state(new_state):
 	match new_state:
