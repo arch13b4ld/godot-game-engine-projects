@@ -4,6 +4,35 @@ export (PackedScene) var Rock
 
 var screensize = Vector2()
 var base_velocity = Vector2(1, 0)
+var level = 0
+var score = 0
+var playing = false
+var difficulty = 3
+
+func game_over():
+	playing = false
+	$HUD.game_over()
+
+func new_level():
+	level += 1
+	$HUD.show_message("Wave %s" % level)
+	
+	for i in range(level):
+		spawn_rock(difficulty)
+
+func new_game():
+	for rock in $Rocks.get_children():
+		rock.queue_free()
+	
+	level = 0
+	score = 0
+	
+	$HUD.update_score(score)
+	$Player.start()
+	$HUD.show_message("Get Ready!")
+	yield($HUD/TimerMessage, "timeout")
+	playing = true
+	new_level()
 
 func spawn_rock(size, position=null, velocity=null):
 	if !position:
@@ -35,11 +64,12 @@ func _on_Player_shoot(scene, position, direction):
 	bullet.start(position, direction)
 	add_child(bullet)
 
+func _process(delta):
+	if playing and $Rocks.get_child_count() == 0:
+		new_level()
+
 func _ready():
 	randomize()
-
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
-	
-	for i in range(3):
-		spawn_rock(3)
+	new_game()
