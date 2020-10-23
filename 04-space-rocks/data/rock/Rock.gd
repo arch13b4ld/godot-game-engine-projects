@@ -5,8 +5,8 @@ export (float) var mass_factor
 
 var screensize = Vector2()
 var base_scale = Vector2(1, 1)
+var radius = 0
 var size
-var radius
 
 func start(_position, velocity, _size):
 	position = _position

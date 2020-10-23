@@ -11,6 +11,9 @@ physics_material_override = SubResource( 1 )
 linear_damp = 0.0
 angular_damp = 0.0
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 scale_factor = 0.2
 mass_factor = 1.5
 

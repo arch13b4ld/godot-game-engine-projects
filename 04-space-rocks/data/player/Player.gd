@@ -19,6 +19,7 @@ var thrust = Vector2()
 var rotation_dir = 0
 var screensize = Vector2()
 var shootable = true
+var radius
 
 func shoot():
 	if state == State.INVULNERABLE:
@@ -66,14 +67,14 @@ func _integrate_forces(physics_state):
 
 	var xform = physics_state.get_transform()
 
-	if xform.origin.x > screensize.x:
-		xform.origin.x = 0
-	elif xform.origin.x < 0:
-		xform.origin.x = screensize.x
-	if xform.origin.y > screensize.y:
-		xform.origin.y = 0
-	elif xform.origin.y < 0:
-		xform.origin.y = screensize.y
+	if xform.origin.x > screensize.x + radius:
+		xform.origin.x = 0 - radius
+	elif xform.origin.x < 0 - radius:
+		xform.origin.x = screensize.x + radius
+	if xform.origin.y > screensize.y + radius:
+		xform.origin.y = 0 - radius
+	elif xform.origin.y < 0 - radius:
+		xform.origin.y = screensize.y + radius
 
 	physics_state.set_transform(xform)
 
@@ -84,3 +85,4 @@ func _ready():
 	set_state(State.ALIVE)
 	screensize = get_viewport().get_visible_rect().size
 	$TimerGun.wait_time = fire_rate
+	radius = int($Sprite.texture.get_size().x / 2)
