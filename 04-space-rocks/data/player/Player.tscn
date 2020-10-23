@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/player_ship.png" type="Texture" id=1]
 [ext_resource path="res://data/player/Player.gd" type="Script" id=2]
+[ext_resource path="res://data/bullet/Bullet.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
@@ -15,6 +16,8 @@ __meta__ = {
 }
 engine_power = 500
 spin_power = 15000
+Bullet = ExtResource( 3 )
+fire_rate = 0.25
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
@@ -30,3 +33,4 @@ position = Vector2( 50, 0 )
 [node name="TimerGun" type="Timer" parent="."]
 one_shot = true
 autostart = true
+[connection signal="timeout" from="TimerGun" to="." method="_on_TimerGun_timeout"]
