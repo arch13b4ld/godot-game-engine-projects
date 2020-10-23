@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/rock.png" type="Texture" id=1]
+[ext_resource path="res://data/rock/Rock.gd" type="Script" id=2]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 1.0
@@ -9,6 +10,9 @@ bounce = 1.0
 physics_material_override = SubResource( 1 )
 linear_damp = 0.0
 angular_damp = 0.0
+script = ExtResource( 2 )
+scale_factor = 0.2
+mass_factor = 1.5
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -4,8 +4,8 @@ export (int) var speed
 
 var velocity = Vector2()
 
-func start(new_position, direction):
-	position += new_position
+func start(_position, direction):
+	position += _position
 	rotation = direction
 	velocity = Vector2(speed, 0).rotated(direction)
 
