@@ -16,6 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="04 -space-rocks"
+run/main_scene="res://data/Main.tscn"
 config/icon="res://icon.png"
 
 [input]
