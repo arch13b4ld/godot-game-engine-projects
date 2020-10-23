@@ -17,6 +17,18 @@ func spawn_rock(size, position=null, velocity=null):
 	rock.screensize = screensize
 	rock.start(position, velocity, size)
 	$Rocks.add_child(rock)
+	rock.connect('exploded', self, 'on_Rock_exploded')
+
+func _on_Rock_exploded(size, radius, position, velocity):
+	if size <= 1:
+		return
+	
+	for offset in [-1, 1]:
+		var direction = (position - $Player.position).normalized().tangent() * offset
+		var new_position = position + direction * radius
+		var new_velocity = direction * velocity.length() * 1.1
+		
+		spawn_rock(size - 1, new_position, new_velocity)
 
 func _on_Player_shoot(scene, position, direction):
 	var bullet = scene.instance()
