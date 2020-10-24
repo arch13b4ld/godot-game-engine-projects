@@ -13,11 +13,11 @@ var size
 
 func explode():
 	layers = 0
-	
+
 	$Sprite.hide()
 	$Explosion/AnimationPlayer.play("explosion")
 	emit_signal("exploded", size, radius, position, linear_velocity)
-	
+
 	linear_velocity = Vector2()
 	angular_velocity = 0
 
@@ -27,11 +27,11 @@ func start(_position, velocity, _size):
 	linear_velocity = velocity
 	angular_velocity = rand_range(-1.5, 1.5)
 	mass = mass_factor * size
-	
+
 	$Explosion.scale =  explosion_scale * size
 	$Sprite.scale = sprite_scale * scale_factor * size
 	radius = int($Sprite.texture.get_size().x / 2 * scale_factor * size)
-	
+
 	var shape = CircleShape2D.new()
 	shape.radius = radius
 	$CollisionShape2D.shape = shape
@@ -41,7 +41,7 @@ func _on_AnimationPlayer_animation_finished(anim_name):
 
 func _integrate_forces(physics_state):
 	var xform = physics_state.get_transform()
-	
+
 	if xform.origin.x > screensize.x + radius:
 		xform.origin.x = 0 - radius
 	elif xform.origin.x < 0 - radius:
@@ -50,7 +50,7 @@ func _integrate_forces(physics_state):
 		xform.origin.y = 0 - radius
 	elif xform.origin.y < 0 - radius:
 		xform.origin.y = screensize.y + radius
-	
+
 	physics_state.set_transform(xform)
 
 func _ready():

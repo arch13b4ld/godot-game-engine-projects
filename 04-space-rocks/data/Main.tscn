@@ -12,6 +12,7 @@ _data = {
 }
 
 [node name="Main" type="Node"]
+pause_mode = 2
 script = ExtResource( 3 )
 Rock = ExtResource( 4 )
 
@@ -19,6 +20,7 @@ Rock = ExtResource( 4 )
 texture = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
 
 [node name="PathRock" type="Path2D" parent="."]
 curve = SubResource( 1 )
@@ -28,8 +30,10 @@ position = Vector2( -960, -544 )
 rotation = 1.5708
 
 [node name="Rocks" type="Node" parent="."]
+pause_mode = 1
 
 [node name="HUD" parent="." instance=ExtResource( 5 )]
+pause_mode = 1
 [connection signal="dead" from="Player" to="." method="game_over"]
 [connection signal="lives_changed" from="Player" to="HUD" method="update_lives"]
 [connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
