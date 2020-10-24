@@ -2,6 +2,7 @@ extends RigidBody2D
 
 signal shoot
 signal lives_changed
+signal dead
 
 enum State {
 	INIT,
@@ -60,14 +61,27 @@ func set_state(new_state):
 	match new_state:
 		State.INIT:
 			$CollisionShape2D.disabled = true
+			$Sprite.modulate.a = 0.5
 		State.ALIVE:
 			$CollisionShape2D.disabled = false
+			$Sprite.modulate.a = 1.0
 		State.INVULNERABLE:
 			$CollisionShape2D.disabled = true
+			$Sprite.modulate.a = 0.5
+			$TimerInvulnerability.start()
 		State.DEAD:
 			$CollisionShape2D.disabled = true
+			$Sprite.hide()
+			linear_velocity = Vector2()
+			emit_signal("dead")
 
 	state = new_state
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	$Explosion.hide()
+
+func _on_TimerInvulnerability_timeout():
+	set_state(State.ALIVE)
 
 func _on_TimerGun_timeout():
 	shootable = true
