@@ -77,6 +77,18 @@ func set_state(new_state):
 
 	state = new_state
 
+func _on_Player_body_entered(body):
+	if body.is_in_group('rocks'):
+		body.explode()
+		$Explosion.show()
+		$Explosion/AnimationPlayer.play("explosion")
+		self.lives -= 1
+
+		if lives <= 0:
+			set_state(State.DEAD)
+		else:
+			set_state(State.INVULNERABLE)
+
 func _on_AnimationPlayer_animation_finished(anim_name):
 	$Explosion.hide()
 
