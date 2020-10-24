@@ -1,6 +1,7 @@
 extends RigidBody2D
 
 signal shoot
+signal lives_changed
 
 enum State {
 	INIT,
@@ -20,9 +21,16 @@ var rotation_dir = 0
 var screensize = Vector2()
 var shootable = true
 var radius
+var lives = 0 setget set_lives
 
 func start():
-	pass
+	$Sprite.show()
+	self.lives = 3
+	set_state(State.ALIVE)
+
+func set_lives(value):
+	lives = value
+	emit_signal("lives_changed", lives)
 
 func shoot():
 	if state == State.INVULNERABLE:
@@ -85,6 +93,7 @@ func _process(delta):
 	handle_input()
 
 func _ready():
-	set_state(State.ALIVE)
+	set_state(State.INIT)
+	$Sprite.hide()
 	$TimerGun.wait_time = fire_rate
 	radius = int($Sprite.texture.get_size().x / 2)
