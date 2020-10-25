@@ -1,6 +1,7 @@
 extends Node
 
 export (PackedScene) var Rock
+export (PackedScene) var Enemy
 
 var screensize = Vector2()
 var base_velocity = Vector2(1, 0)
@@ -19,6 +20,9 @@ func new_level():
 
 	for i in range(level):
 		spawn_rock(difficulty)
+
+	$TimerEnemy.wait_time = rand_range(5, 10)
+	$TimerEnemy.start()
 
 func new_game():
 	for rock in $Rocks.get_children():
@@ -47,6 +51,14 @@ func spawn_rock(size, position=null, velocity=null):
 	rock.start(position, velocity, size)
 	$Rocks.add_child(rock)
 	rock.connect('exploded', self, '_on_Rock_exploded')
+
+func _on_TimerEnemy_timeout():
+	var enemy = Enemy.instance()
+	add_child(enemy)
+	enemy.target = $Player
+	enemy.connect('shoot', self, 'on_Player_shoot')
+	$TimerEnemy.wait_time = rand_range(20, 40)
+	$TimerEnemy.start()
 
 func _on_Rock_exploded(size, radius, position, velocity):
 	score += 1
@@ -90,3 +102,4 @@ func _ready():
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
 	$Player.position = $Position2D.position
+
