@@ -19,6 +19,13 @@ config/name="04 -space-rocks"
 run/main_scene="res://data/Main.tscn"
 config/icon="res://icon.png"
 
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
 [input]
 
 rotate_left={

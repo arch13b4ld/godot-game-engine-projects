@@ -49,6 +49,9 @@ func spawn_rock(size, position=null, velocity=null):
 	rock.connect('exploded', self, '_on_Rock_exploded')
 
 func _on_Rock_exploded(size, radius, position, velocity):
+	score += 1
+	$HUD.update_score(score)
+
 	if size <= 1:
 		return
 
@@ -64,19 +67,19 @@ func _on_Player_shoot(scene, position, direction):
 	bullet.start(position, direction)
 	add_child(bullet)
 
-func _input(event):
-	if event.is_action_pressed("pause"):
-		if not playing:
-			return
-
-	get_tree().paused = not get_tree().paused
-
-	if get_tree().paused:
-		$HUD/LabelMessage.text = "Paused"
-		$HUD/LabelMessage.show()
-	else:
-		$HUD/LabelMessage.text = ""
-		$HUD/LabelMessage.hide()
+#func _input(event):
+#	if event.is_action_pressed("pause"):
+#		if not playing:
+#			return
+#
+#	get_tree().paused = not get_tree().paused
+#
+#	if get_tree().paused:
+#		$HUD/LabelMessage.text = "Paused"
+#		$HUD/LabelMessage.show()
+#	else:
+#		$HUD/LabelMessage.text = ""
+#		$HUD/LabelMessage.hide()
 
 func _process(delta):
 	if playing and $Rocks.get_child_count() == 0:
@@ -86,3 +89,4 @@ func _ready():
 	randomize()
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
+	$Player.position = $Position2D.position
