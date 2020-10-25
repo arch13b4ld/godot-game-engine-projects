@@ -18,7 +18,7 @@ func new_level():
 	level += 1
 	$HUD.show_message("Wave %s" % level)
 
-	for i in range(level):
+	for _i in range(level):
 		spawn_rock(difficulty)
 
 	$TimerEnemy.wait_time = rand_range(5, 10)
@@ -56,7 +56,7 @@ func _on_TimerEnemy_timeout():
 	var enemy = Enemy.instance()
 	add_child(enemy)
 	enemy.target = $Player
-	enemy.connect('shoot', self, 'on_Player_shoot')
+	enemy.connect('shoot', self, '_on_Player_shoot')
 	$TimerEnemy.wait_time = rand_range(20, 40)
 	$TimerEnemy.start()
 
@@ -93,7 +93,7 @@ func _on_Player_shoot(scene, position, direction):
 #		$HUD/LabelMessage.text = ""
 #		$HUD/LabelMessage.hide()
 
-func _process(delta):
+func _process(_delta):
 	if playing and $Rocks.get_child_count() == 0:
 		new_level()
 

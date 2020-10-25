@@ -30,19 +30,19 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 margin_left = 20.0
 margin_top = 20.0
-margin_right = 1004.0
+margin_right = 1900.0
 margin_bottom = 92.0
 
 [node name="LabelScore" type="Label" parent="MarginContainer/HBoxContainer"]
-margin_right = 858.0
+margin_right = 1754.0
 margin_bottom = 72.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 1 )
 text = "0"
 
 [node name="LivesCounter" type="HBoxContainer" parent="MarginContainer/HBoxContainer"]
-margin_left = 862.0
-margin_right = 984.0
+margin_left = 1758.0
+margin_right = 1880.0
 margin_bottom = 72.0
 
 [node name="Life1" type="TextureRect" parent="MarginContainer/HBoxContainer/LivesCounter"]

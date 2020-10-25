@@ -9,17 +9,27 @@ export (int) var health
 var follow
 var target = null
 
-func _on_TimerGun_timeout():
-	pass
+func shoot_pulse(n, delay):
+	for _i in range(n):
+		shoot()
+		yield(get_tree().create_timer(delay), "timeout")
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func shoot():
+	var direction = target.global_position - global_position
+	direction = direction.rotated(rand_range(-0.1, 0.1)).angle()
+	emit_signal("shoot", Bullet, global_position, direction)
+
+func _on_TimerGun_timeout():
+	shoot_pulse(3, 1.5)
+
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	queue_free()
 
 func _process(delta):
 	follow.offset += speed * delta
 	position = follow.global_position
 
-	if follow.unit_offset > 1:
+	if follow.unit_offset >= 1:
 		queue_free()
 
 func _ready():

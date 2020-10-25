@@ -89,7 +89,7 @@ func _on_Player_body_entered(body):
 		else:
 			set_state(State.INVULNERABLE)
 
-func _on_AnimationPlayer_animation_finished(anim_name):
+func _on_AnimationPlayer_animation_finished(_anim_name):
 	$Explosion.hide()
 
 func _on_TimerInvulnerability_timeout():
@@ -115,7 +115,7 @@ func _integrate_forces(physics_state):
 
 	physics_state.set_transform(xform)
 
-func _process(delta):
+func _process(_delta):
 	handle_input()
 
 func _ready():
