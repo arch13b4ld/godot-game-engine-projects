@@ -71,6 +71,7 @@ anims/spin = SubResource( 3 )
 [node name="TimerGun" type="Timer" parent="."]
 wait_time = 1.5
 autostart = true
+[connection signal="body_entered" from="." to="." method="_on_Enemie_body_entered"]
 [connection signal="animation_finished" from="Explosion/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerGun" to="." method="_on_TimerGun_timeout"]
 

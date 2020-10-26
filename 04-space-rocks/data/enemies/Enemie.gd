@@ -9,6 +9,25 @@ export (int) var health
 var follow
 var target = null
 
+func damage(amount):
+	health -= amount
+	$AnimationPlayer.play("flash")
+
+	if health <= 0:
+		explode()
+
+	yield($AnimationPlayer, "animation_finished")
+	$AnimationPlayer.play("spin")
+
+func explode():
+	speed = 0
+	$TimerGun.stop()
+	$CollisionShape2D.disabled = true
+	$Sprite.hide()
+	$Explosion.show()
+	$Explosion/AnimationPlayer.play("explosion")
+#	$AExplosion.play()
+
 func shoot_pulse(n, delay):
 	for _i in range(n):
 		shoot()
@@ -18,6 +37,11 @@ func shoot():
 	var direction = target.global_position - global_position
 	direction = direction.rotated(rand_range(-0.1, 0.1)).angle()
 	emit_signal("shoot", Bullet, global_position, direction)
+
+func _on_Enemie_body_entered(body):
+	if body.name == 'Player':
+		pass
+	explode()
 
 func _on_TimerGun_timeout():
 	shoot_pulse(3, 1.5)
