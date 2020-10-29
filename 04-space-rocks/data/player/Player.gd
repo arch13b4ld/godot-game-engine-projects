@@ -40,6 +40,7 @@ func shoot():
 	emit_signal("shoot", Bullet, $PositionGun.global_position, rotation)
 	shootable = false
 	$TimerGun.start()
+	$AudioLaser.play()
 
 func handle_input():
 	thrust = Vector2()
@@ -50,6 +51,10 @@ func handle_input():
 		shoot()
 	if Input.is_action_pressed("thrust"):
 		thrust = Vector2(engine_power, 0)
+		if not $AudioEngine.playing:
+			$AudioEngine.play()
+	else:
+		$AudioEngine.stop()
 
 	rotation_dir = 0
 	if Input.is_action_pressed("rotate_right"):
@@ -72,6 +77,7 @@ func set_state(new_state):
 		State.DEAD:
 			$CollisionShape2D.disabled = true
 			$Sprite.hide()
+			$AudioEngine.stop()
 			linear_velocity = Vector2()
 			emit_signal("dead")
 
