@@ -21,6 +21,7 @@ func damage(amount):
 
 func explode():
 	speed = 0
+	$AudioExplosion.play()
 	$TimerGun.stop()
 	$CollisionShape2D.disabled = true
 	$Sprite.hide()
@@ -36,6 +37,7 @@ func shoot_pulse(n, delay):
 func shoot():
 	var direction = target.global_position - global_position
 	direction = direction.rotated(rand_range(-0.1, 0.1)).angle()
+	$AudioShoot.play()
 	emit_signal("shoot", Bullet, global_position, direction)
 
 func _on_Enemie_body_entered(body):

@@ -11,10 +11,12 @@ var playing = false
 var difficulty = 3
 
 func game_over():
+	$AudioBackground.stop()
 	playing = false
 	$HUD.game_over()
 
 func new_level():
+	$AudioLevelUp.play()
 	level += 1
 	$HUD.show_message("Wave %s" % level)
 
@@ -32,6 +34,7 @@ func new_game():
 	score = 0
 
 	$HUD.update_score(score)
+	$AudioBackground.play()
 	$Player.start()
 	$HUD.show_message("Get Ready!")
 	yield($HUD/TimerMessage, "timeout")
@@ -61,6 +64,7 @@ func _on_TimerEnemy_timeout():
 	$TimerEnemy.start()
 
 func _on_Rock_exploded(size, radius, position, velocity):
+	$AudioExplosion.play()
 	score += 1
 	$HUD.update_score(score)
 
