@@ -3,7 +3,7 @@ extends CanvasLayer
 signal start_game
 
 var lives_counter = []
-var ShieldBar
+onready var ShieldBar = $MarginContainer/HBoxContainer/ProgressShield
 var red_bar = preload("res://assets/barHorizontal_red_mid 200.png")
 var green_bar = preload("res://assets/barHorizontal_green_mid 200.png")
 var yellow_bar = preload("res://assets/barHorizontal_yellow_mid 200.png")
@@ -47,4 +47,3 @@ func _ready():
 		$MarginContainer/HBoxContainer/LivesCounter/Life2,
 		$MarginContainer/HBoxContainer/LivesCounter/Life3,
 	]
-	ShieldBar = $MarginContainer/HBoxContainer/ProgressShield

@@ -39,15 +39,27 @@ func set_shield(value):
 		value = max_shield
 
 	shield = value
-	emit_signal("shield_changed", shield / max_shield)
+	emit_signal("shield_changed", shield * 100 / max_shield)
 
 	if shield <= 0:
 		self.lives -= 1
+
+		if lives <= 0:
+			set_state(State.DEAD)
+			explode(Vector2(1.5, 1.5))
+		else:
+			set_state(State.INVULNERABLE)
+			explode(Vector2(1, 1))
 
 func set_lives(value):
 	lives = value
 	self.shield = max_shield
 	emit_signal("lives_changed", lives)
+
+func explode(value):
+		$Explosion.scale = value
+		$Explosion.show()
+		$Explosion/AnimationPlayer.play("explosion")
 
 func shoot():
 	if state == State.INVULNERABLE:
@@ -104,14 +116,8 @@ func set_state(new_state):
 func _on_Player_body_entered(body):
 	if body.is_in_group('rocks'):
 		body.explode()
-		$Explosion.show()
-		$Explosion/AnimationPlayer.play("explosion")
+		explode(Vector2(0.5, 0.5))
 		self.shield -= body.size * 25
-
-	if lives <= 0:
-			set_state(State.DEAD)
-	else:
-			set_state(State.INVULNERABLE)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
 	$Explosion.hide()

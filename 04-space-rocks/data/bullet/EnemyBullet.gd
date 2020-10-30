@@ -14,6 +14,7 @@ func _on_VisibilityNotifier2D_screen_exited():
 
 func _on_EnemyBullet_body_entered(body):
 	if body.name == 'Player':
+		body.explode(Vector2(0.5, 0.5))
 		body.shield -= 15
 	queue_free()
 

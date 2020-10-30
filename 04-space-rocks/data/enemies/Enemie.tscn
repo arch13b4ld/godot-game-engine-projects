@@ -89,6 +89,7 @@ anims/flash = SubResource( 2 )
 anims/spin = SubResource( 3 )
 
 [node name="Explosion" parent="." instance=ExtResource( 3 )]
+frame = 1
 
 [node name="TimerGun" type="Timer" parent="."]
 wait_time = 1.5

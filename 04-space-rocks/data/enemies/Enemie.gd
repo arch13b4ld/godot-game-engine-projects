@@ -27,7 +27,6 @@ func explode():
 	$Sprite.hide()
 	$Explosion.show()
 	$Explosion/AnimationPlayer.play("explosion")
-#	$AExplosion.play()
 
 func shoot_pulse(n, delay):
 	for _i in range(n):
@@ -42,6 +41,7 @@ func shoot():
 
 func _on_Enemie_body_entered(body):
 	if body.name == 'Player':
+		body.explode(Vector2(0.5, 0.5))
 		body.shield -= 50
 	explode()
 
