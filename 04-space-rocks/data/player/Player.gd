@@ -3,6 +3,7 @@ extends RigidBody2D
 signal shoot
 signal lives_changed
 signal dead
+signal shield_changed
 
 enum State {
 	INIT,
@@ -15,6 +16,8 @@ export (int) var engine_power
 export (int) var spin_power
 export (PackedScene) var Bullet
 export (float) var fire_rate
+export (int) var max_shield
+export (float) var shield_regen
 
 var state = null
 var thrust = Vector2()
@@ -23,14 +26,27 @@ var screensize = Vector2()
 var shootable = true
 var radius
 var lives = 0 setget set_lives
+var shield = 0 setget set_shield
 
 func start():
 	$Sprite.show()
 	self.lives = 3
+	self.shield = max_shield
 	set_state(State.ALIVE)
+
+func set_shield(value):
+	if value > max_shield:
+		value = max_shield
+
+	shield = value
+	emit_signal("shield_changed", shield / max_shield)
+
+	if shield <= 0:
+		self.lives -= 1
 
 func set_lives(value):
 	lives = value
+	self.shield = max_shield
 	emit_signal("lives_changed", lives)
 
 func shoot():
@@ -90,7 +106,7 @@ func _on_Player_body_entered(body):
 		body.explode()
 		$Explosion.show()
 		$Explosion/AnimationPlayer.play("explosion")
-		self.lives -= 1
+		self.shield -= body.size * 25
 
 		if lives <= 0:
 			set_state(State.DEAD)
@@ -123,8 +139,9 @@ func _integrate_forces(physics_state):
 
 	physics_state.set_transform(xform)
 
-func _process(_delta):
+func _process(delta):
 	handle_input()
+	self.shield += shield_regen * delta
 
 func _ready():
 	set_state(State.INIT)
