@@ -106,4 +106,3 @@ func _ready():
 	screensize = get_viewport().get_visible_rect().size
 	$Player.screensize = screensize
 	$Player.position = $Position2D.position
-

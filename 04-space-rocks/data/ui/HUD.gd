@@ -3,11 +3,23 @@ extends CanvasLayer
 signal start_game
 
 var lives_counter = []
+var ShieldBar
+var red_bar = preload("res://assets/barHorizontal_red_mid 200.png")
+var green_bar = preload("res://assets/barHorizontal_green_mid 200.png")
+var yellow_bar = preload("res://assets/barHorizontal_yellow_mid 200.png")
 
 func game_over():
 	show_message("Game Over :(")
 	yield($TimerMessage, "timeout")
 	$ButtonStart.show()
+
+func update_shieldbar(value):
+	ShieldBar.texture_progress = green_bar
+	if value < 40:
+		ShieldBar.texture_progress = red_bar
+	elif value < 70:
+		ShieldBar.texture_progress = yellow_bar
+	ShieldBar.value = value
 
 func update_lives(value):
 	for life in range(lives_counter.size()):
@@ -35,3 +47,4 @@ func _ready():
 		$MarginContainer/HBoxContainer/LivesCounter/Life2,
 		$MarginContainer/HBoxContainer/LivesCounter/Life3,
 	]
+	ShieldBar = $MarginContainer/HBoxContainer/ProgressShield

@@ -108,9 +108,9 @@ func _on_Player_body_entered(body):
 		$Explosion/AnimationPlayer.play("explosion")
 		self.shield -= body.size * 25
 
-		if lives <= 0:
+	if lives <= 0:
 			set_state(State.DEAD)
-		else:
+	else:
 			set_state(State.INVULNERABLE)
 
 func _on_AnimationPlayer_animation_finished(_anim_name):
