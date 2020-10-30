@@ -5,7 +5,7 @@ signal start_game
 func _ready():
 	pass
 
-func _process(delta):
+func _process(_delta):
 	pass
 
 func _on_TMessage_timeout():

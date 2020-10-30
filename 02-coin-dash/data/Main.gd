@@ -17,7 +17,7 @@ func _ready():
 	$Player.screensize = screensize
 	$Player.hide()
 
-func _process(delta):
+func _process(_delta):
 	if playing and $CCoin.get_child_count() == 0:
 		level += 1
 		time_left += 5
@@ -67,7 +67,7 @@ func new_game():
 
 func spawn_coins():
 	$ALevel.play()
-	for i in range(difficulty + level):
+	for _i in range(difficulty + level):
 		var c = Coin.instance()
 		$CCoin.add_child(c)
 		c.screensize = screensize

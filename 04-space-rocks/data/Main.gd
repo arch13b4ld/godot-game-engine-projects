@@ -11,7 +11,7 @@ var playing = false
 var difficulty = 3
 
 func game_over():
-	$AudioBackground.stop()
+	$AudioBackground.stop() 
 	playing = false
 	$HUD.game_over()
 
