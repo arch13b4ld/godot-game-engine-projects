@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/player_sheet.png" type="Texture" id=1]
 [ext_resource path="res://data/player/Player.gd" type="Script" id=2]
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=1]
 resource_name = "climb"
 length = 0.3
 loop = true
@@ -20,7 +20,7 @@ tracks/0/keys = {
 "values": [ 0, 1, 2 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=2]
 resource_name = "crouch"
 length = 0.2
 loop = true
@@ -37,7 +37,7 @@ tracks/0/keys = {
 "values": [ 3, 4 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 resource_name = "hurt"
 length = 0.2
 loop = true
@@ -54,8 +54,7 @@ tracks/0/keys = {
 "values": [ 5, 6 ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "idle"
+[sub_resource type="Animation" id=4]
 length = 0.4
 loop = true
 tracks/0/type = "value"
@@ -103,8 +102,7 @@ tracks/0/keys = {
 "values": [ 11 ]
 }
 
-[sub_resource type="Animation" id=3]
-resource_name = "run"
+[sub_resource type="Animation" id=7]
 length = 0.6
 loop = true
 tracks/0/type = "value"
@@ -120,7 +118,7 @@ tracks/0/keys = {
 "values": [ 13, 14, 15, 16, 17, 18 ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=8]
 extents = Vector2( 5, 10 )
 
 [node name="Player" type="KinematicBody2D"]
@@ -138,17 +136,17 @@ frame = 7
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "idle"
-anims/climb = SubResource( 7 )
-anims/crouch = SubResource( 8 )
-anims/hurt = SubResource( 4 )
-anims/idle = SubResource( 1 )
+anims/climb = SubResource( 1 )
+anims/crouch = SubResource( 2 )
+anims/hurt = SubResource( 3 )
+anims/idle = SubResource( 4 )
 anims/jump_down = SubResource( 5 )
 anims/jump_up = SubResource( 6 )
-anims/run = SubResource( 3 )
+anims/run = SubResource( 7 )
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 6 )
-shape = SubResource( 2 )
+shape = SubResource( 8 )
 
 [node name="Camera" type="Camera2D" parent="."]
 current = true

@@ -16,7 +16,7 @@ var new_anim
 
 func set_state(new_state):
 	state = new_state
-	
+
 	match state:
 		State.IDLE:
 			new_anim = 'idle'
@@ -26,10 +26,14 @@ func set_state(new_state):
 			new_anim = 'hurt'
 		State.JUMP:
 			new_anim = 'jump_up'
+		State.CLIMB:
+			new_anim = 'climb'
+		State.CROUCH:
+			new_anim = 'crouch'
 		State.DEAD:
 			hide()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if new_anim != anim:
 		anim = new_anim
 		$Sprite/AnimationPlayer.play(anim)
