@@ -10,9 +10,68 @@ enum State {
 	DEAD
 }
 
+enum Action {
+	LEFT,
+	RIGHT,
+	JUMP,
+	CLIMB,
+	CROUCH
+}
+
+export (int) var run_speed
+export (int) var jump_speed
+export (int) var gravity
+
 var state
 var anim
 var new_anim
+
+var velocity = Vector2()
+
+var input_actions = [
+	'left',
+	'right',
+	'jump',
+	'climb',
+	'crouch'
+	]
+
+func handle_input():
+	if state == State.HURT:
+		return
+
+	var current_action
+	for action in input_actions:
+		if action == input_actions[Action.JUMP]:
+			current_action = Input.is_action_just_pressed(action)
+		else:
+			current_action = Input.is_action_pressed(action)
+
+		if current_action:
+			velocity.x = 0
+
+			if action == input_actions[Action.LEFT]:
+				velocity.x -= run_speed
+				$Sprite.flip_h = true
+			elif action == input_actions[Action.RIGHT]:
+				velocity.x += run_speed
+				$Sprite.flip_h = false
+			elif action == input_actions[Action.JUMP] and is_on_floor():
+				set_state(State.JUMP)
+				velocity.y = jump_speed
+			elif action == input_actions[Action.CLIMB]:
+				set_state(State.CLIMB)
+				velocity.y = jump_speed
+			elif action == input_actions[Action.CROUCH]:
+				set_state(State.CROUCH)
+
+			if state == State.IDLE and velocity.x != 0:
+				set_state(State.RUN)
+			elif state == State.RUN and velocity.x == 0:
+				set_state(State.IDLE)
+
+			if state in [State.IDLE, State.RUN] and !is_on_floor():
+				set_state(State.JUMP)
 
 func set_state(new_state):
 	state = new_state
