@@ -44,6 +44,7 @@ func shoot():
 
 func handle_input():
 	thrust = Vector2()
+	$Exhaust.emitting = false
 
 	if state in [State.INIT, State.DEAD]:
 		return
@@ -51,6 +52,7 @@ func handle_input():
 		shoot()
 	if Input.is_action_pressed("thrust"):
 		thrust = Vector2(engine_power, 0)
+		$Exhaust.emitting = true
 		if not $AudioEngine.playing:
 			$AudioEngine.play()
 	else:
