@@ -22,7 +22,8 @@ export (int) var run_speed
 export (int) var jump_speed
 export (int) var gravity
 
-var state
+var state setget set_state
+
 var anim
 var new_anim
 
@@ -34,7 +35,8 @@ var input_actions = [
 	'right',
 	'jump',
 	'climb',
-	'crouch']
+	'crouch'
+]
 
 func handle_input():
 	if state == State.HURT:
@@ -57,7 +59,7 @@ func handle_input():
 				velocity.x += run_speed
 				$Sprite.flip_h = false
 			if action == input_actions[Action.JUMP] and is_on_floor():
-				set_state(State.JUMP)
+				self.state = State.JUMP
 				velocity.y = jump_speed
 #			if action == input_actions[Action.CLIMB]:
 #				set_state(State.CLIMB)
@@ -90,12 +92,12 @@ func _physics_process(delta):
 	handle_input()
 
 	if state == State.IDLE and velocity.x != 0:
-		set_state(State.RUN)
+		self.state = State.RUN
 	elif state == State.RUN and velocity.x == 0:
-		set_state(State.IDLE)
+		self.state = State.IDLE
 
 	if state in [State.IDLE, State.RUN] and !is_on_floor():
-		set_state(State.JUMP)
+		self.state = State.JUMP
 
 	if new_anim != anim:
 		anim = new_anim
@@ -104,9 +106,9 @@ func _physics_process(delta):
 	velocity = move_and_slide(velocity, up_direction)
 
 	if state == State.JUMP and is_on_floor():
-		set_state(State.IDLE)
+		self.state = State.IDLE
 	elif state == State.JUMP and velocity.y > 0:
 		new_anim = 'jump_down'
 
 func _ready():
-	set_state(State.IDLE)
+	self.state = State.IDLE
