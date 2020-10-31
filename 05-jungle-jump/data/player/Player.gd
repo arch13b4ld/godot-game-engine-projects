@@ -84,10 +84,11 @@ func handle_input():
 				velocity.y = jump_speed
 
 #			if action == input_actions[Action.CLIMB]:
-#				set_state(State.CLIMB)
+#				self.state = State.CLIMB
 #				velocity.y = jump_speed
-#			elif action == input_actions[Action.CROUCH]:
-#				set_state(State.CROUCH)
+
+			if action == input_actions[Action.CROUCH] and is_on_floor():
+				set_state(State.CROUCH)
 
 func set_state(new_state):
 	state = new_state
@@ -108,10 +109,10 @@ func set_state(new_state):
 
 			yield(get_tree().create_timer(0.5), "timeout")
 
-			self.state = State.IDLE
+			set_state(State.IDLE)
 
 			if life <= 0:
-				self.state = State.DEAD
+				set_state(State.DEAD)
 		State.JUMP:
 			new_anim = 'jump_up'
 		State.CLIMB:
@@ -145,6 +146,9 @@ func _physics_process(delta):
 		self.state = State.IDLE
 	elif state == State.JUMP and velocity.y > 0:
 		new_anim = 'jump_down'
+
+	if state == State.CROUCH and velocity.x != 0:
+		self.state = State.RUN
 
 func _ready():
 	self.state = State.IDLE
