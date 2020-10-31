@@ -40,6 +40,8 @@ func handle_input():
 	if state == State.HURT:
 		return
 
+	velocity.x = 0
+
 	var curr_action
 	for action in input_actions:
 		if action in [input_actions[Action.JUMP], input_actions[Action.CROUCH]]:
@@ -48,30 +50,20 @@ func handle_input():
 			curr_action = Input.is_action_pressed(action)
 
 		if curr_action:
-			velocity.x = 0
-
 			if action == input_actions[Action.LEFT]:
 				velocity.x -= run_speed
 				$Sprite.flip_h = true
 			elif action == input_actions[Action.RIGHT]:
 				velocity.x += run_speed
 				$Sprite.flip_h = false
-			elif action == input_actions[Action.JUMP] and is_on_floor():
+			if action == input_actions[Action.JUMP] and is_on_floor():
 				set_state(State.JUMP)
 				velocity.y = jump_speed
-			elif action == input_actions[Action.CLIMB]:
-				set_state(State.CLIMB)
-				velocity.y = jump_speed
-			elif action == input_actions[Action.CROUCH]:
-				set_state(State.CROUCH)
-
-	if state == State.IDLE and velocity.x != 0:
-		set_state(State.RUN)
-	elif state == State.RUN and velocity.x == 0:
-		set_state(State.IDLE)
-
-	if state in [State.IDLE, State.RUN] and !is_on_floor():
-		set_state(State.JUMP)
+#			if action == input_actions[Action.CLIMB]:
+#				set_state(State.CLIMB)
+#				velocity.y = jump_speed
+#			if action == input_actions[Action.CROUCH]:
+#				set_state(State.CROUCH)
 
 func set_state(new_state):
 	state = new_state
@@ -94,7 +86,16 @@ func set_state(new_state):
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
+
 	handle_input()
+
+	if state == State.IDLE and velocity.x != 0:
+		set_state(State.RUN)
+	elif state == State.RUN and velocity.x == 0:
+		set_state(State.IDLE)
+
+	if state in [State.IDLE, State.RUN] and !is_on_floor():
+		set_state(State.JUMP)
 
 	if new_anim != anim:
 		anim = new_anim
@@ -104,7 +105,7 @@ func _physics_process(delta):
 
 	if state == State.JUMP and is_on_floor():
 		set_state(State.IDLE)
-	if state == State.JUMP and velocity.y > 0:
+	elif state == State.JUMP and velocity.y > 0:
 		new_anim = 'jump_down'
 
 func _ready():
