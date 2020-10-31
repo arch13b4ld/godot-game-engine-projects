@@ -27,6 +27,7 @@ var anim
 var new_anim
 
 var velocity = Vector2()
+var up_direction = Vector2(0, -1)
 
 var input_actions = [
 	'left',
@@ -92,10 +93,15 @@ func set_state(new_state):
 		State.DEAD:
 			hide()
 
-func _physics_process(_delta):
+func _physics_process(delta):
+	velocity.y += gravity * delta
+	handle_input()
+
 	if new_anim != anim:
 		anim = new_anim
 		$Sprite/AnimationPlayer.play(anim)
+
+	velocity = move_and_slide(velocity, up_direction)
 
 func _ready():
 	set_state(State.IDLE)
