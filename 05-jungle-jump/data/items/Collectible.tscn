@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://data/items/Collectible.gd" type="Script" id=1]
+
+[sub_resource type="Animation" id=1]
+resource_name = "anim"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 3, 2, 1 ]
+}
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 7, 7 )
+
+[node name="Collectible" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+autoplay = "anim"
+anims/anim = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2( -1, 0 )
+shape = SubResource( 2 )
+[connection signal="body_entered" from="." to="." method="_on_Collectible_body_entered"]
