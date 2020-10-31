@@ -1,5 +1,8 @@
 extends KinematicBody2D
 
+signal life_changed
+signal dead
+
 enum State {
 	IDLE,
 	RUN,
@@ -21,6 +24,8 @@ enum Action {
 export (int) var run_speed
 export (int) var jump_speed
 export (int) var gravity
+export (int) var bounce_height
+export (int) var bounce_lenght
 
 var state setget set_state
 
@@ -30,6 +35,8 @@ var new_anim
 var velocity = Vector2()
 var up_direction = Vector2(0, -1)
 
+var life
+
 var input_actions = [
 	'left',
 	'right',
@@ -38,10 +45,18 @@ var input_actions = [
 	'crouch'
 ]
 
+func hurt():
+	if self.state != State.HURT:
+		self.state = State.HURT
+
 func start(new_position):
 	position = new_position
 	show()
+
 	self.state = State.IDLE
+
+	life = 3
+	emit_signal("life_changed", life)
 
 func handle_input():
 	if state == State.HURT:
@@ -63,13 +78,15 @@ func handle_input():
 			elif action == input_actions[Action.RIGHT]:
 				velocity.x += run_speed
 				$Sprite.flip_h = false
+
 			if action == input_actions[Action.JUMP] and is_on_floor():
 				self.state = State.JUMP
 				velocity.y = jump_speed
+
 #			if action == input_actions[Action.CLIMB]:
 #				set_state(State.CLIMB)
 #				velocity.y = jump_speed
-#			if action == input_actions[Action.CROUCH]:
+#			elif action == input_actions[Action.CROUCH]:
 #				set_state(State.CROUCH)
 
 func set_state(new_state):
@@ -82,6 +99,19 @@ func set_state(new_state):
 			new_anim = 'run'
 		State.HURT:
 			new_anim = 'hurt'
+
+			velocity.y = bounce_height
+			velocity.x = bounce_lenght * sign(velocity.x)
+
+			life -= 1
+			emit_signal("life_changed", life)
+
+			yield(get_tree().create_timer(0.5), "timeout")
+
+			self.state = State.IDLE
+
+			if life <= 0:
+				self.state = State.DEAD
 		State.JUMP:
 			new_anim = 'jump_up'
 		State.CLIMB:
@@ -89,6 +119,7 @@ func set_state(new_state):
 		State.CROUCH:
 			new_anim = 'crouch'
 		State.DEAD:
+			emit_signal("dead")
 			hide()
 
 func _physics_process(delta):
