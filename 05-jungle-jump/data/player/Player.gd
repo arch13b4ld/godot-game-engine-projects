@@ -38,6 +38,11 @@ var input_actions = [
 	'crouch'
 ]
 
+func start(new_position):
+	position = new_position
+	show()
+	self.state = State.IDLE
+
 func handle_input():
 	if state == State.HURT:
 		return
