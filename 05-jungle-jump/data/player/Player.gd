@@ -34,21 +34,20 @@ var input_actions = [
 	'right',
 	'jump',
 	'climb',
-	'crouch'
-	]
+	'crouch']
 
 func handle_input():
 	if state == State.HURT:
 		return
 
-	var current_action
+	var curr_action
 	for action in input_actions:
-		if action == input_actions[Action.JUMP]:
-			current_action = Input.is_action_just_pressed(action)
+		if action in [input_actions[Action.JUMP], input_actions[Action.CROUCH]]:
+			curr_action = Input.is_action_just_pressed(action)
 		else:
-			current_action = Input.is_action_pressed(action)
+			curr_action = Input.is_action_pressed(action)
 
-		if current_action:
+		if curr_action:
 			velocity.x = 0
 
 			if action == input_actions[Action.LEFT]:
@@ -66,13 +65,13 @@ func handle_input():
 			elif action == input_actions[Action.CROUCH]:
 				set_state(State.CROUCH)
 
-			if state == State.IDLE and velocity.x != 0:
-				set_state(State.RUN)
-			elif state == State.RUN and velocity.x == 0:
-				set_state(State.IDLE)
+	if state == State.IDLE and velocity.x != 0:
+		set_state(State.RUN)
+	elif state == State.RUN and velocity.x == 0:
+		set_state(State.IDLE)
 
-			if state in [State.IDLE, State.RUN] and !is_on_floor():
-				set_state(State.JUMP)
+	if state in [State.IDLE, State.RUN] and !is_on_floor():
+		set_state(State.JUMP)
 
 func set_state(new_state):
 	state = new_state
@@ -102,6 +101,11 @@ func _physics_process(delta):
 		$Sprite/AnimationPlayer.play(anim)
 
 	velocity = move_and_slide(velocity, up_direction)
+
+	if state == State.JUMP and is_on_floor():
+		set_state(State.IDLE)
+	if state == State.JUMP and velocity.y > 0:
+		new_anim = 'jump_down'
 
 func _ready():
 	set_state(State.IDLE)
