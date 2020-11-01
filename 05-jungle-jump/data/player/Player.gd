@@ -28,14 +28,13 @@ export (int) var bounce_height
 export (int) var bounce_lenght
 
 var state setget set_state
+var life setget set_life
 
 var anim
 var new_anim
 
 var velocity = Vector2()
 var up_direction = Vector2(0, -1)
-
-var life setget set_life
 
 var input_actions = [
 	'left',
@@ -123,6 +122,8 @@ func set_state(new_state):
 		State.DEAD:
 			emit_signal("dead")
 			hide()
+			$CollisionShape.disabled = true
+			set_physics_process(false)
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
@@ -148,9 +149,19 @@ func _physics_process(delta):
 
 	for idx in range(get_slide_count()):
 		var collision = get_slide_collision(idx)
+		var collider = collision.collider
 
-		if collision.collider.name == 'TileMapSpikes':
+		if collider.name == 'TileMapSpikes':
 			hurt()
+
+		if collider.is_in_group('enemies'):
+			var player_feet = (position + $CollisionShape.shape.extents).y
+
+			if player_feet < collider.position.y:
+				collider.hurt()
+				velocity.y = -200
+			else:
+				hurt()
 
 	if state == State.JUMP and is_on_floor():
 		self.state = State.IDLE
