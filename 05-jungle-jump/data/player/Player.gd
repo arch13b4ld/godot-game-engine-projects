@@ -143,6 +143,15 @@ func _physics_process(delta):
 
 	velocity = move_and_slide(velocity, up_direction)
 
+	if state == State.HURT:
+		return
+
+	for idx in range(get_slide_count()):
+		var collision = get_slide_collision(idx)
+
+		if collision.collider.name == 'TileMapSpikes':
+			hurt()
+
 	if state == State.JUMP and is_on_floor():
 		self.state = State.IDLE
 	elif state == State.JUMP and velocity.y > 0:
