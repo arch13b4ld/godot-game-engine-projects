@@ -1,13 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/tilesets/tiles_world.tres" type="TileSet" id=1]
 [ext_resource path="res://data/levels/Level.gd" type="Script" id=2]
 [ext_resource path="res://data/player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/tilesets/tiles_items.tres" type="TileSet" id=4]
 [ext_resource path="res://assets/tilesets/tiles_spikes.tres" type="TileSet" id=5]
+[ext_resource path="res://data/items/Collectible.tscn" type="PackedScene" id=6]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
+Collectible = ExtResource( 6 )
 
 [node name="TileMapWorld" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
