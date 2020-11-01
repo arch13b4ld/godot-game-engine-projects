@@ -4,7 +4,7 @@ signal pickup
 
 var textures = {
 	'cherry': "res://assets/sprites/cherry.png",
-	'gem': "res://assets/sprites/gem.png"
+	'gem'	: "res://assets/sprites/gem.png"
 }
 
 func init(type, new_position):

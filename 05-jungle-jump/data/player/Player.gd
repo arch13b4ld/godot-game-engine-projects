@@ -35,7 +35,7 @@ var new_anim
 var velocity = Vector2()
 var up_direction = Vector2(0, -1)
 
-var life
+var life setget set_life
 
 var input_actions = [
 	'left',
@@ -54,9 +54,7 @@ func start(new_position):
 	show()
 
 	self.state = State.IDLE
-
-	life = 3
-	emit_signal("life_changed", life)
+	self.life = 3
 
 func handle_input():
 	if state == State.HURT:
@@ -90,6 +88,10 @@ func handle_input():
 			if action == input_actions[Action.CROUCH] and is_on_floor():
 				set_state(State.CROUCH)
 
+func set_life(value):
+	life = value
+	emit_signal("life_changed", life)
+
 func set_state(new_state):
 	state = new_state
 
@@ -104,14 +106,13 @@ func set_state(new_state):
 			velocity.y = bounce_height
 			velocity.x = bounce_lenght * sign(velocity.x)
 
-			life -= 1
-			emit_signal("life_changed", life)
+			self.life -= 1
 
 			yield(get_tree().create_timer(0.5), "timeout")
 
 			set_state(State.IDLE)
 
-			if life <= 0:
+			if self.life <= 0:
 				set_state(State.DEAD)
 		State.JUMP:
 			new_anim = 'jump_up'
