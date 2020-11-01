@@ -78,8 +78,9 @@ gravity = 900
 speed = 50
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 3 )
+texture = ExtResource( 1 )
 hframes = 6
+frame = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 autoplay = "walk"
@@ -89,3 +90,4 @@ anims/walk = SubResource( 1 )
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
 position = Vector2( -2, 5 )
 shape = SubResource( 2 )
+[connection signal="animation_finished" from="Sprite/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

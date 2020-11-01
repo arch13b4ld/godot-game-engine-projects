@@ -12,8 +12,17 @@ var velocity = Vector2()
 var up_direction = Vector2(0, -1)
 var facing = Direction.RIGHT
 
+func hurt():
+	$Sprite/AnimationPlayer.play("death")
+	$CollisionShape.disabled = true
+	set_physics_process(false)
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == 'death':
+		queue_free()
+
 func _physics_process(delta):
-	$Sprite.flip_h = velocity.x > 0
+	$Sprite.flip_h = facing == Direction.RIGHT
 	velocity.y += gravity * delta
 	velocity.x = facing * speed
 
