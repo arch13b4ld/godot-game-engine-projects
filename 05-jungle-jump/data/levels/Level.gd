@@ -44,6 +44,7 @@ func _ready():
 
 	pickups = $TileMapPickups
 	pickups.hide()
+	spawn_pickups()
 
 	$Player.start($Player/PlayerSpawn.position)
 	set_camera_limits()
