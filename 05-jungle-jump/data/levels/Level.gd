@@ -29,8 +29,11 @@ func spawn_pickups():
 func set_camera_limits():
 	var map_size = $TileMapWorld.get_used_rect()
 	var cell_size = $TileMapWorld.cell_size
-	$Player/Camera.limit_left = (map_size.position.x - 5) * cell_size.x
-	$Player/Camera.limit_right = (map_size.end.x + 5) * cell_size.x
+
+	$Player/Camera.limit_left = (map_size.position.x + 1) * cell_size.x
+	$Player/Camera.limit_right = (map_size.end.x - 1) * cell_size.x
+	$Player/Camera.limit_top = 0
+	$Player/Camera.limit_bottom = map_size.end.y * cell_size.y
 
 func set_score(value):
 	score = value
