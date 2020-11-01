@@ -25,7 +25,6 @@ texture = ExtResource( 7 )
 centered = false
 
 [node name="ParallaxLayerMiddle" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2( 0, 240 )
 motion_scale = Vector2( 0.6, 1 )
 motion_mirroring = Vector2( 880, 0 )
 
