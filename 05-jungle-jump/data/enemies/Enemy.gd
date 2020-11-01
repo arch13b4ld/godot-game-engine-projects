@@ -19,13 +19,15 @@ func _physics_process(delta):
 
 	velocity = move_and_slide(velocity, up_direction)
 
-	for idx in range(get_slide_count()):
+	var slide_count = get_slide_count()
+	for idx in range(slide_count):
 		var collision = get_slide_collision(idx)
+		var collider = collision.collider
 
-		if collision.collider.name == 'Player':
-			collision.collider.hurt()
+		if collider.name == 'Player':
+			collider.hurt()
 
-		if collision.normal.x != 0:
+		if collision.normal.x != 0 and is_on_wall():
 			facing = sign(collision.normal.x)
 			velocity.y = -100
 
