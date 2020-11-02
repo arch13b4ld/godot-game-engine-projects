@@ -159,6 +159,7 @@ __meta__ = {
 }
 run_speed = 150
 jump_speed = -325
+climb_speed = 50
 gravity = 750
 bounce_height = -200
 bounce_lenght = -100

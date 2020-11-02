@@ -23,6 +23,7 @@ enum Action {
 
 export (int) var run_speed
 export (int) var jump_speed
+export (int) var climb_speed
 export (int) var gravity
 export (int) var bounce_height
 export (int) var bounce_lenght
@@ -32,6 +33,8 @@ var life setget set_life
 
 var anim
 var new_anim
+
+var is_on_ladder = false
 
 var velocity = Vector2()
 var up_direction = Vector2(0, -1)
@@ -91,9 +94,19 @@ func handle_input():
 			if action == input_actions[Action.CROUCH] and is_on_floor():
 				self.state = State.CROUCH
 			
-			#if action == input_actions[Action.CLIMB]:
-#				self.state = State.CLIMB
-#				velocity.y = jump_speed
+			if action == input_actions[Action.CLIMB] and state != State.CLIMB and is_on_ladder:
+				self.state = State.CLIMB
+			if state == State.CLIMB:
+				if not is_on_ladder:
+					self.state = State.IDLE
+				else:
+					if action == input_actions[Action.CLIMB]:
+						velocity.y = -climb_speed
+					elif action == input_actions[Action.CROUCH]:
+						velocity.y = climb_speed
+					else:
+						velocity.y = 0
+						$Sprite/AnimationPlayer.play("climb")
 				
 		elif state == State.CROUCH:
 			self.state = State.IDLE
@@ -140,7 +153,8 @@ func set_state(new_state):
 			emit_signal("dead")
 
 func _physics_process(delta):
-	velocity.y += gravity * delta
+	if state != State.CLIMB:
+		velocity.y += gravity * delta
 
 	handle_input()
 
