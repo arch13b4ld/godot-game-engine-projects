@@ -36,6 +36,9 @@ var new_anim
 var velocity = Vector2()
 var up_direction = Vector2(0, -1)
 
+var max_jumps = 2
+var jump_count = 0
+
 var input_actions = [
 	'left',
 	'right',
@@ -76,9 +79,14 @@ func handle_input():
 				velocity.x += run_speed
 				$Sprite.flip_h = false
 
-			if action == input_actions[Action.JUMP] and is_on_floor():
-				self.state = State.JUMP
-				velocity.y = jump_speed
+			if action == input_actions[Action.JUMP]:
+				if state == State.JUMP and jump_count < max_jumps:
+					self.state = State.JUMP
+					velocity.y = jump_speed / 1.5
+					jump_count += 1
+				elif is_on_floor():
+					self.state = State.JUMP
+					velocity.y = jump_speed
 
 #			if action == input_actions[Action.CLIMB]:
 #				self.state = State.CLIMB
@@ -113,6 +121,10 @@ func set_state(new_state):
 				set_state(State.DEAD)
 		State.JUMP:
 			new_anim = 'jump_up'
+
+			if jump_count >= max_jumps:
+				jump_count = 1
+	
 			$AudioJump.play()
 		State.CLIMB:
 			new_anim = 'climb'
@@ -169,6 +181,9 @@ func _physics_process(delta):
 
 	if state == State.CROUCH and velocity.x != 0:
 		self.state = State.RUN
+	
+	if position.y > 1000:
+		self.state = State.DEAD
 
 func _ready():
 	self.state = State.IDLE
