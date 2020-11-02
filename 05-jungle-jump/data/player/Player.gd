@@ -53,7 +53,7 @@ func start(new_position):
 	show()
 
 	self.state = State.IDLE
-	self.life = 3
+	self.life = 5
 
 func handle_input():
 	if state == State.HURT:
@@ -122,8 +122,10 @@ func set_state(new_state):
 		State.DEAD:
 			emit_signal("dead")
 			hide()
-			$CollisionShape.disabled = true
-			set_physics_process(false)
+
+func _on_Player_dead():
+	$CollisionShape.disabled = true
+	set_physics_process(false)
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
