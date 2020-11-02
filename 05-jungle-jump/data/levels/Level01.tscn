@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://data/levels/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://data/enemies/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://data/items/Door.tscn" type="PackedScene" id=3]
 
 [node name="Level01" instance=ExtResource( 1 )]
 
@@ -15,7 +16,7 @@ tile_data = PoolIntArray( 786444, 3, 0, 1048598, 4, 0, 1245227, 4, 0, 1310751, 0
 tile_data = PoolIntArray( 262181, 8, 0, 262182, 8, 0, 262197, 8, 0, 262198, 8, 0, 262199, 8, 0, 262200, 8, 0, 458786, 8, 0, 458788, 8, 0, 655389, 8, 0, 655390, 8, 0, 1835028, 7, 0, 1835033, 7, 0, 1835039, 7, 0, 1835041, 7, 0, 1835043, 7, 0 )
 
 [node name="TileMapSpikes" parent="." index="4"]
-tile_data = PoolIntArray( 983066, 2, 0, 983067, 2, 0, 1310752, 0, 0, 1310753, 0, 0, 1310754, 0, 0, 1310755, 0, 0, 1638420, 2, 0, 1638421, 2, 0, 1638425, 2, 0, 1638427, 2, 0, 1638428, 2, 0, 1638436, 2, 0, 1638437, 2, 0, 2162707, 0, 0, 2162708, 0, 0, 2162709, 0, 0, 2162710, 0, 0, 2162711, 1, 0, 2162712, 0, 0, 2162713, 0, 0, 2162714, 0, 0, 2162716, 0, 0, 2162717, 1, 0, 2162718, 0, 0, 2162719, 0, 0, 2162720, 0, 0, 2162721, 0, 0, 2162722, 0, 0 )
+tile_data = PoolIntArray( 983066, 2, 0, 983067, 2, 0, 1310752, 0, 0, 1310753, 0, 0, 1310754, 0, 0, 1310755, 0, 0, 1638420, 2, 0, 1638421, 2, 0, 1638425, 2, 0, 1638427, 2, 0, 1638428, 2, 0, 1638436, 2, 0, 1638437, 2, 0, 2162708, 0, 0, 2162709, 0, 0, 2162710, 0, 0, 2162711, 1, 0, 2162712, 0, 0, 2162713, 0, 0, 2162714, 0, 0, 2162716, 0, 0, 2162717, 1, 0, 2162718, 0, 0, 2162719, 0, 0, 2162720, 0, 0, 2162721, 0, 0, 2162722, 0, 0 )
 
 [node name="Player" parent="." index="5"]
 position = Vector2( 0, -0.857178 )
@@ -34,5 +35,9 @@ position = Vector2( 846.482, 323.046 )
 
 [node name="Sprite" parent="Enemy3" index="0"]
 flip_h = true
+
+[node name="Door" parent="." index="9" instance=ExtResource( 3 )]
+position = Vector2( 314, 528 )
+[connection signal="body_entered" from="Door" to="." method="_on_Door_body_entered"]
 
 [editable path="Enemy3"]

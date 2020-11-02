@@ -39,6 +39,9 @@ func set_score(value):
 	score = value
 	emit_signal("score_changed", score)
 
+func _on_Door_body_entered(_body):
+	GameState.next_level()
+
 func _on_Player_dead():
 	GameState.restart()
 
