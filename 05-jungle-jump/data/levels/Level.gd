@@ -39,6 +39,9 @@ func set_score(value):
 	score = value
 	emit_signal("score_changed", score)
 
+func _on_Player_dead():
+	GameState.restart()
+
 func _on_Collectible_pickup():
 	self.score += 1
 
