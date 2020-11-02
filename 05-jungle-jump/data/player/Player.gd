@@ -101,14 +101,11 @@ func set_state(new_state):
 			new_anim = 'run'
 		State.HURT:
 			new_anim = 'hurt'
-
 			velocity.y = bounce_height
 			velocity.x = bounce_lenght * sign(velocity.x)
-
 			self.life -= 1
 
 			yield(get_tree().create_timer(0.5), "timeout")
-
 			set_state(State.IDLE)
 
 			if self.life <= 0:
@@ -120,10 +117,10 @@ func set_state(new_state):
 		State.CROUCH:
 			new_anim = 'crouch'
 		State.DEAD:
-			emit_signal("dead")
 			hide()
 			$CollisionShape.disabled = true
 			set_physics_process(false)
+			emit_signal("dead")
 
 func _physics_process(delta):
 	velocity.y += gravity * delta

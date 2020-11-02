@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/tilesets/tiles_world.tres" type="TileSet" id=1]
 [ext_resource path="res://data/levels/Level.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://data/items/Collectible.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/environment/layers/back.png" type="Texture" id=7]
 [ext_resource path="res://assets/environment/layers/middle.png" type="Texture" id=8]
+[ext_resource path="res://assets/audio/Grasslands Theme.ogg" type="AudioStream" id=9]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
@@ -71,4 +72,8 @@ __meta__ = {
 visible = false
 
 [node name="PlayerSpawn" type="Position2D" parent="Player"]
+
+[node name="AudioBackground" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
 [connection signal="dead" from="Player" to="." method="_on_Player_dead"]
