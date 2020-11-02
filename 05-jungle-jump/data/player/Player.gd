@@ -104,7 +104,8 @@ func set_state(new_state):
 			velocity.y = bounce_height
 			velocity.x = bounce_lenght * sign(velocity.x)
 			self.life -= 1
-
+			
+			$AudioHurt.play()
 			yield(get_tree().create_timer(0.5), "timeout")
 			set_state(State.IDLE)
 
@@ -112,6 +113,7 @@ func set_state(new_state):
 				set_state(State.DEAD)
 		State.JUMP:
 			new_anim = 'jump_up'
+			$AudioJump.play()
 		State.CLIMB:
 			new_anim = 'climb'
 		State.CROUCH:

@@ -13,6 +13,7 @@ var up_direction = Vector2(0, -1)
 var facing = Direction.RIGHT
 
 func hurt():
+	$AudioHurt.play()
 	$Sprite/AnimationPlayer.play("death")
 	$CollisionShape.disabled = true
 	set_physics_process(false)

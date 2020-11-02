@@ -47,6 +47,7 @@ func _on_Player_dead():
 
 func _on_Collectible_pickup():
 	self.score += 1
+	$AudioPickup.play()
 
 func _ready():
 	self.score = 0
