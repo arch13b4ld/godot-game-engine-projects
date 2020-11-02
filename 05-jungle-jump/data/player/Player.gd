@@ -97,16 +97,13 @@ func handle_input():
 			if action == input_actions[Action.CLIMB] and state != State.CLIMB and is_on_ladder:
 				self.state = State.CLIMB
 			if state == State.CLIMB:
+				if action == input_actions[Action.CLIMB]:
+					velocity.y = -climb_speed
+				elif action == input_actions[Action.CROUCH]:
+					velocity.y = climb_speed
+
 				if not is_on_ladder:
 					self.state = State.IDLE
-				else:
-					if action == input_actions[Action.CLIMB]:
-						velocity.y = -climb_speed
-					elif action == input_actions[Action.CROUCH]:
-						velocity.y = climb_speed
-					else:
-						velocity.y = 0
-						$Sprite/AnimationPlayer.play("climb")
 				
 		elif state == State.CROUCH:
 			self.state = State.IDLE
@@ -155,6 +152,8 @@ func set_state(new_state):
 func _physics_process(delta):
 	if state != State.CLIMB:
 		velocity.y += gravity * delta
+	else:
+		velocity.y = 0
 
 	handle_input()
 
