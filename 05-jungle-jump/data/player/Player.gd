@@ -66,7 +66,7 @@ func handle_input():
 
 	var curr_action
 	for action in input_actions:
-		if action in [input_actions[Action.JUMP], input_actions[Action.CROUCH]]:
+		if action == input_actions[Action.JUMP]:
 			curr_action = Input.is_action_just_pressed(action)
 		else:
 			curr_action = Input.is_action_pressed(action)
@@ -88,12 +88,15 @@ func handle_input():
 					self.state = State.JUMP
 					velocity.y = jump_speed
 
-#			if action == input_actions[Action.CLIMB]:
+			if action == input_actions[Action.CROUCH] and is_on_floor():
+				self.state = State.CROUCH
+			
+			#if action == input_actions[Action.CLIMB]:
 #				self.state = State.CLIMB
 #				velocity.y = jump_speed
-
-			if action == input_actions[Action.CROUCH] and is_on_floor():
-				set_state(State.CROUCH)
+				
+		elif state == State.CROUCH:
+			self.state = State.IDLE
 
 func set_life(value):
 	life = value
@@ -141,7 +144,7 @@ func _physics_process(delta):
 
 	handle_input()
 
-	if state == State.IDLE and velocity.x != 0:
+	if state in [State.IDLE, State.CROUCH] and velocity.x != 0:
 		self.state = State.RUN
 	elif state == State.RUN and velocity.x == 0:
 		self.state = State.IDLE
@@ -176,11 +179,9 @@ func _physics_process(delta):
 
 	if state == State.JUMP and is_on_floor():
 		self.state = State.IDLE
+		$ParticlesDust.emitting = true
 	elif state == State.JUMP and velocity.y > 0:
 		new_anim = 'jump_down'
-
-	if state == State.CROUCH and velocity.x != 0:
-		self.state = State.RUN
 	
 	if position.y > 1000:
 		self.state = State.DEAD
