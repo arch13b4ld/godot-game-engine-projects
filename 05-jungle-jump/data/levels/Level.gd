@@ -39,8 +39,23 @@ func set_score(value):
 	score = value
 	emit_signal("score_changed", score)
 
+func _on_Ladder_body_entered(body):
+	if body.name == 'Player':
+		body.is_on_ladder = true
+
+func _on_Ladder_body_exited(body):
+	if body.name == 'Player':
+		body.is_on_ladder = false
+
+func _on_Door_body_entered(_body):
+	GameState.next_level()
+
+func _on_Player_dead():
+	GameState.restart()
+
 func _on_Collectible_pickup():
 	self.score += 1
+	$AudioPickup.play()
 
 func _ready():
 	self.score = 0

@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/Kenney Thick.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/environment/layers/back.png" type="Texture" id=2]
-[ext_resource path="res://assets/environment/layers/middle.png" type="Texture" id=3]
+[ext_resource path="res://assets/environment/layers/middle.png" type="Texture" id=2]
+[ext_resource path="res://assets/environment/layers/back.png" type="Texture" id=3]
+[ext_resource path="res://data/ui/TitleScreen.gd" type="Script" id=4]
+[ext_resource path="res://assets/audio/Intro Theme.ogg" type="AudioStream" id=5]
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -14,10 +16,59 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "anim"
+tracks/0/type = "value"
+tracks/0/path = NodePath("VBoxContainer/LabelTitle:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -320 ), Vector2( 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("VBoxContainer/LabelMessage:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("TextureRectBack:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.501961 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TextureRectMiddle:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0.501961 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -25,17 +76,17 @@ __meta__ = {
 [node name="TextureRectBack" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-texture = ExtResource( 2 )
+texture = ExtResource( 3 )
 stretch_mode = 7
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRectMIddle" type="TextureRect" parent="."]
+[node name="TextureRectMiddle" type="TextureRect" parent="."]
 margin_top = 320.0
 margin_right = 1024.0
 margin_bottom = 688.0
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 stretch_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -73,7 +124,7 @@ custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 5
 custom_constants/shadow_offset_y = 5
 custom_constants/shadow_as_outline = 1
-text = "Press Space to PLay"
+text = "Press Space to Play"
 align = 1
 valign = 1
 __meta__ = {
@@ -81,4 +132,9 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "anim"
 anims/anim = SubResource( 3 )
+
+[node name="AudioBackground" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true

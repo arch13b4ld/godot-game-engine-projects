@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/tilesets/tiles_world.tres" type="TileSet" id=1]
 [ext_resource path="res://data/levels/Level.gd" type="Script" id=2]
@@ -8,7 +8,9 @@
 [ext_resource path="res://data/items/Collectible.tscn" type="PackedScene" id=6]
 [ext_resource path="res://assets/environment/layers/back.png" type="Texture" id=7]
 [ext_resource path="res://assets/environment/layers/middle.png" type="Texture" id=8]
-[ext_resource path="res://data/ui/HUD.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/audio/Grasslands Theme.ogg" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/pickup2.ogg" type="AudioStream" id=10]
+[ext_resource path="res://data/ui/HUD.tscn" type="PackedScene" id=11]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 2 )
@@ -38,7 +40,7 @@ region_rect = Rect2( 0, 0, 880, 368 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="HUD" parent="CanvasLayer" instance=ExtResource( 9 )]
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 11 )]
 
 [node name="TileMapWorld" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -78,3 +80,11 @@ visible = false
 [node name="PlayerSpawn" type="Position2D" parent="Player"]
 [connection signal="score_changed" from="." to="CanvasLayer/HUD" method="_on_Level_score_changed"]
 [connection signal="life_changed" from="Player" to="CanvasLayer/HUD" method="_on_Player_life_changed"]
+[connection signal="dead" from="Player" to="." method="_on_Player_dead"]
+
+[node name="AudioBackground" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+autoplay = true
+
+[node name="AudioPickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
