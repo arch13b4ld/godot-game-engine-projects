@@ -59,7 +59,7 @@ func start(new_position):
 	show()
 
 	self.state = State.IDLE
-	self.life = 3
+	self.life = 5
 
 func handle_input():
 	if state == State.HURT:

@@ -109,6 +109,9 @@ custom_constants/shadow_as_outline = 1
 text = "Jungle Jump"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="LabelMessage" type="Label" parent="VBoxContainer"]
 margin_top = 302.0
