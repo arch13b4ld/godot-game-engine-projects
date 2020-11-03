@@ -93,7 +93,7 @@ func handle_input():
 
 			if action == input_actions[Action.CROUCH] and is_on_floor():
 				self.state = State.CROUCH
-			
+
 			if action == input_actions[Action.CLIMB] and state != State.CLIMB and is_on_ladder:
 				self.state = State.CLIMB
 			if state == State.CLIMB:
@@ -104,7 +104,7 @@ func handle_input():
 
 				if not is_on_ladder:
 					self.state = State.IDLE
-				
+
 		elif state == State.CROUCH:
 			self.state = State.IDLE
 
@@ -125,7 +125,7 @@ func set_state(new_state):
 			velocity.y = bounce_height
 			velocity.x = bounce_lenght * sign(velocity.x)
 			self.life -= 1
-			
+
 			$AudioHurt.play()
 			yield(get_tree().create_timer(0.5), "timeout")
 			set_state(State.IDLE)
@@ -137,7 +137,7 @@ func set_state(new_state):
 
 			if jump_count >= max_jumps:
 				jump_count = 1
-	
+
 			$AudioJump.play()
 		State.CLIMB:
 			new_anim = 'climb'
@@ -195,7 +195,7 @@ func _physics_process(delta):
 		$ParticlesDust.emitting = true
 	elif state == State.JUMP and velocity.y > 0:
 		new_anim = 'jump_down'
-	
+
 	if position.y > 1000:
 		self.state = State.DEAD
 
