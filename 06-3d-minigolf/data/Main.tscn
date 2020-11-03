@@ -1,3 +1,11 @@
 [gd_scene format=2]
 
 [node name="Main" type="Node"]
+
+[node name="GridMap" type="GridMap" parent="."]
+data = {
+"cells": PoolIntArray(  )
+}
+__meta__ = {
+"_editor_clip_": 0
+}
