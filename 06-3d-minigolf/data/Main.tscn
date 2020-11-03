@@ -1,11 +1,15 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/meshlibrary.tres" type="MeshLibrary" id=1]
 
 [node name="Main" type="Node"]
 
 [node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource( 1 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 65535, 0, 1074397190, 0, 65530, -1609170932, 1, 65530, 538312714, 65533, 65530, 1074790405, 65534, 65530, 1075183628, 65535, 65530, 1073741827, 65535, 65531, -1609957364, 65535, 65532, 1074397196, 65535, 65533, -1609957364, 65535, 65534, 1074397196, 65535, 65535, 1074397196 )
 }
 __meta__ = {
-"_editor_clip_": 0
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, -1, 0 )
 }
