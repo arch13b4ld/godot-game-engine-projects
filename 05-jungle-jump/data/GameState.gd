@@ -11,6 +11,8 @@ func next_level():
 	
 	if current_level <= num_levels:
 		get_tree().reload_current_scene()
+	else:
+		restart()
 
 func restart():
 	get_tree().change_scene(TitleScreen)
