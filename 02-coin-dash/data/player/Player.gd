@@ -23,11 +23,21 @@ enum {
 export (int) var speed
 
 var velocity
+
 var screensize = Vector2()
+var target = Vector2()
+
 var state = IDLE
 var facing = RIGHT
-var animations = ['idle', 'run', 'hurt']
-var groups = ['coins', 'powerups', 'obstacles']
+
+var animations = [
+	'idle',
+	'run',
+	'hurt']
+var groups = [
+	'coins',
+	'powerups',
+	'obstacles']
 var directions = {
 	'ui_left' : Vector2(-1,  0),
 	'ui_right': Vector2( 1,  0),
@@ -64,14 +74,17 @@ func set_position_limits():
 
 func set_state():
 	if velocity.length() > 0:
+#	if (target - position).length() > 5:
 		state = RUN
 	else:
 		state = IDLE
 
 func set_facing():
 	if velocity.x < 0:
+#	if (target - position).x < 5:
 		facing = LEFT
 	elif velocity.x > 0:
+#	elif (target - position).x > 5:
 		facing = RIGHT
 
 func handle_input():
@@ -81,6 +94,19 @@ func handle_input():
 		if Input.is_action_pressed(key):
 			velocity += directions[key]
 
+#	if position.x > target.x:
+#		velocity += directions['ui_left']
+#	elif position.x < target.x:
+#		velocity += directions['ui_right']
+#	elif position.y > target.y:
+#		velocity += directions['ui_up']
+#	elif position.y < target.y:
+#		velocity += directions['ui_down']
+
+func _input(event):
+	if event is InputEventScreenTouch and event.is_pressed():
+		target = event.position
+
 func _process(delta):
 	handle_input()
 	set_state()
@@ -88,6 +114,8 @@ func _process(delta):
 
 	if state == RUN:
 		velocity = velocity.normalized() * speed
+#		velocity = (target - position).normalized() * speed
+	
 	position += velocity * delta
 
 	set_position_limits()
